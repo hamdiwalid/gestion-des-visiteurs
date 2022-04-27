@@ -2,6 +2,7 @@
 using System.Data;
 using System.Data.SqlClient;
 using backend.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace backend.Controllers
 {
@@ -126,6 +127,28 @@ namespace backend.Controllers
 
             }
             return new JsonResult("Supprimer avec succès");
+        }
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult login([FromBody] User userlogin)
+        {
+            var user = Authenticate(userlogin);
+            if (user != null)
+            {
+                var token = Generate(user);
+                    return Ok(token);
+            }
+            return NotFound("Verifier votre coordonne");
+        }
+
+        private string Generate(User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        private User Authenticate(User userlogin)
+        {
+            throw new NotImplementedException();
         }
     }
 }

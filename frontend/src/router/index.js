@@ -1,12 +1,17 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Dashboard from "@/views/Dashboard.vue";
-import Tables from "@/views/Tables.vue";
-import Billing from "@/views/Billing.vue";
-import VirtualReality from "@/views/VirtualReality.vue";
 import Profile from "@/views/Profile.vue";
-import Rtl from "@/views/Rtl.vue";
 import SignIn from "@/views/SignIn.vue";
 import SignUp from "@/views/SignUp.vue";
+import Demandes from "../views/Demande.vue";
+import Agents from "../views/agent.vue";
+import Responsables from "../views/responsable.vue";
+import Assistants from "../views/assistant.vue";
+import DemandesSociete from "../views/demandeSociete.vue";
+import Historique from "../views/historique.vue";
+import DemandesAgent from "../views/demandeAgent.vue";
+import HistoriqueAgent from "../views/historiqueAgent.vue";
+import HistoriqueSociete from "../views/historiqueSociete.vue";
 
 const routes = [
   {
@@ -20,19 +25,9 @@ const routes = [
     component: Dashboard,
   },
   {
-    path: "/tables",
-    name: "Tables",
-    component: Tables,
-  },
-  {
-    path: "/billing",
-    name: "Billing",
-    component: Billing,
-  },
-  {
-    path: "/virtual-reality",
-    name: "Virtual Reality",
-    component: VirtualReality,
+    path: "/demandes",
+    name: "Demandes",
+    component: Demandes,
   },
   {
     path: "/profile",
@@ -40,9 +35,9 @@ const routes = [
     component: Profile,
   },
   {
-    path: "/rtl-page",
-    name: "Rtl",
-    component: Rtl,
+    path: "/agents",
+    name: "Agents",
+    component: Agents,
   },
   {
     path: "/sign-in",
@@ -54,6 +49,42 @@ const routes = [
     name: "Sign Up",
     component: SignUp,
   },
+  {
+    path: "/responsable",
+    name: "Responsables",
+    component: Responsables,
+  },
+  {
+    path: "/assistant",
+    name: "Assistants",
+    component: Assistants,
+  },
+  {
+    path: "/demandeAgent",
+    name: "DemandesAgent",
+    component: DemandesAgent,
+  },
+  {
+    path: "/demandeSociete",
+    name: "DemandesSociete",
+    component: DemandesSociete,
+  },
+  {
+    path: "/historique",
+    name: "Historique",
+    component: Historique,
+  },
+  {
+    path: "/historiqueAgent",
+    name: "HistoriqueAgent",
+    component: HistoriqueAgent,
+  },
+  {
+    path: "/historiqueSociete",
+    name: "HistoriqueSociete",
+    component: HistoriqueSociete,
+  },
+  
 ];
 
 const router = createRouter({

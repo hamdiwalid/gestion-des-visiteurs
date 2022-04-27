@@ -19,11 +19,11 @@ export default {
   props: {
     to: {
       type: [Object, String],
-      required: true,
+      required: false,
     },
     navText: {
       type: String,
-      required: true,
+      required: false,
     },
   },
   data() {
