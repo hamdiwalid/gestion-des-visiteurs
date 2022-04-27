@@ -32,18 +32,15 @@
         <ul class="navbar-nav justify-content-end">
           <li class="nav-item d-flex align-items-center">
             <router-link
-              :to="{ name: 'Sign In' }"
+              :to="{ name: '' }"
               class="px-0 nav-link font-weight-bold"
               :class="textWhite ? textWhite : 'text-body'"
             >
               <i
-                class="fa fa-user"
+                class="fa fa-sign-out fa-lg"
                 :class="this.$store.state.isRTL ? 'ms-sm-2' : 'me-sm-1'"
               ></i>
-              <span v-if="this.$store.state.isRTL" class="d-sm-inline d-none"
-                >يسجل دخول</span
-              >
-              <span v-else class="d-sm-inline d-none">Sign In </span>
+              
             </router-link>
           </li>
           <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
@@ -61,13 +58,7 @@
             </a>
           </li>
           <li class="px-3 nav-item d-flex align-items-center">
-            <a
-              class="p-0 nav-link"
-              @click="toggleConfigurator"
-              :class="textWhite ? textWhite : 'text-body'"
-            >
-              <i class="cursor-pointer fa fa-cog fixed-plugin-button-nav"></i>
-            </a>
+           
           </li>
           <li
             class="nav-item dropdown d-flex align-items-center"

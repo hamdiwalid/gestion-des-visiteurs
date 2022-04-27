@@ -18,13 +18,7 @@
           </template>
         </sidenav-collapse>
       </li>
-      <li class="nav-item">
-        <sidenav-collapse navText="Billing" :to="{ name: 'Billing' }">
-          <template #icon>
-            <credit-card />
-          </template>
-        </sidenav-collapse>
-      </li>
+
 
       <li class="nav-item">
         <sidenav-collapse
@@ -110,7 +104,7 @@ export default {
   },
   data() {
     return {
-      title: "Soft UI Dashboard PRO",
+      title: "Admin",
       controls: "dashboardsExamples",
       isActive: "active",
     };

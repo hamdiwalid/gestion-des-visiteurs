@@ -18,7 +18,7 @@ namespace backend.Controllers
         {
             string query = @"
                              Select * from 
-                            dbo.[societe]
+                            dbo.[Societes]
                             ";
             DataTable dt = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("AppCon");
@@ -41,7 +41,7 @@ namespace backend.Controllers
         public JsonResult Post(Societe societe)
         {
             string query = @"
-                             Insert into dbo.[societe]
+                             Insert into dbo.[Societes]
                              values(@nom,@description,@matricule)
                             ";
             DataTable dt = new DataTable();
@@ -69,7 +69,7 @@ namespace backend.Controllers
         public JsonResult Put(Societe societe)
         {
             string query = @"
-                             Update dbo.[societe]
+                             Update dbo.[Societes]
                              set nom=@nom,description=@description,matricule=@matricule
                              where id = @id
                             ";
@@ -99,7 +99,7 @@ namespace backend.Controllers
         public JsonResult Delete(int id)
         {
             string query = @"
-                             Delete dbo.[societe]
+                             Delete dbo.[Societes]
                              where id=@id
                             ";
             DataTable dt = new DataTable();

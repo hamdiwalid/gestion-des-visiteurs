@@ -18,7 +18,7 @@ namespace backend.Controllers
         {
             string query = @"
                              Select * from 
-                            dbo.[notification]
+                            dbo.[Notifications]
                             ";
             DataTable dt = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("AppCon");
@@ -41,7 +41,7 @@ namespace backend.Controllers
         public JsonResult Post(Notification notification)
         {
             string query = @"
-                             Insert into dbo.[notification]
+                             Insert into dbo.[Notifications]
                              values(@etat,@titre,@user_id,@demande_id,@societe_id)
                             ";
             DataTable dt = new DataTable();
@@ -71,7 +71,7 @@ namespace backend.Controllers
         public JsonResult Put(Notification notification)
         {
             string query = @"
-                             Update dbo.[notification]
+                             Update dbo.[Notifications]
                              set etat=@etat,titre=@titre,user_id=@user_id,demande_id=@demande_id,societe_id=@societe_id
                              where id = @id
                             ";
@@ -102,7 +102,7 @@ namespace backend.Controllers
         public JsonResult Delete(int id)
         {
             string query = @"
-                             Delete dbo.[notification]
+                             Delete dbo.[Notifications]
                              where id=@id
                             ";
             DataTable dt = new DataTable();
