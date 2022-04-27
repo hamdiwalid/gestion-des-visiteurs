@@ -15,6 +15,9 @@ namespace backend.Data
         {
         }
 
-        public DbSet<backend.Models.User> User { get; set; }
+        public DbSet<User> User { get; set; }
+        public DbSet<Societe> Societes { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
+        public DbSet<Demande> Demandes { get; set; }
     }
 }

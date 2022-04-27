@@ -6,7 +6,7 @@ using Newtonsoft.Json.Serialization;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<backendContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("backendContext") ?? throw new InvalidOperationException("Connection string 'backendContext' not found.")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("AppCon") ?? throw new InvalidOperationException("Connection string 'backendContext' not found.")));
 
 // Add services to the container.
 builder.Services.AddCors(c =>

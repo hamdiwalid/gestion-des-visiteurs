@@ -54,9 +54,9 @@ namespace backend.Controllers
                 {
                     cmd.Parameters.AddWithValue("@etat", notification.etat);
                     cmd.Parameters.AddWithValue("@titre", notification.titre);
-                    cmd.Parameters.AddWithValue("@user_id", notification.user_id);
-                    cmd.Parameters.AddWithValue("@demande_id", notification.demande_id);
-                    cmd.Parameters.AddWithValue("@societe_id", notification.societe_id);
+                    cmd.Parameters.AddWithValue("@user_id", notification.User);
+                    cmd.Parameters.AddWithValue("@demande_id", notification.Demande);
+                    cmd.Parameters.AddWithValue("@societe_id", notification.Societe);
 
                     sqlDataReader = cmd.ExecuteReader();
                     dt.Load(sqlDataReader);
@@ -86,9 +86,9 @@ namespace backend.Controllers
                     cmd.Parameters.AddWithValue("@id", notification.id);
                     cmd.Parameters.AddWithValue("@etat", notification.etat);
                     cmd.Parameters.AddWithValue("@titre", notification.titre);
-                    cmd.Parameters.AddWithValue("@user_id", notification.user_id);
-                    cmd.Parameters.AddWithValue("@demande_id", notification.demande_id);
-                    cmd.Parameters.AddWithValue("@societe_id", notification.societe_id);
+                    cmd.Parameters.AddWithValue("@user_id", notification.User);
+                    cmd.Parameters.AddWithValue("@demande_id", notification.Demande);
+                    cmd.Parameters.AddWithValue("@societe_id", notification.Societe);
                     sqlDataReader = cmd.ExecuteReader();
                     dt.Load(sqlDataReader);
                     sqlDataReader.Close();

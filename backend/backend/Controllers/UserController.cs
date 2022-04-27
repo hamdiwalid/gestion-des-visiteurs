@@ -54,13 +54,13 @@ namespace backend.Controllers
                 Con.Open();
                 using (SqlCommand cmd = new SqlCommand(query, Con))
                 {
-                    cmd.Parameters.AddWithValue("@UserName", user.UserName);
-                    cmd.Parameters.AddWithValue("@FirstName", user.FirstName);
-                    cmd.Parameters.AddWithValue("@LastName", user.LastName);
-                    cmd.Parameters.AddWithValue("@Password", user.Password);
+                    cmd.Parameters.AddWithValue("@UserName", user.identifiant);
+                    cmd.Parameters.AddWithValue("@FirstName", user.nom);
+                    cmd.Parameters.AddWithValue("@LastName", user.prenom);
+                    cmd.Parameters.AddWithValue("@Password", user.motpasse);
                     cmd.Parameters.AddWithValue("@role", user.role);
                     cmd.Parameters.AddWithValue("@CIN", user.CIN);
-                    cmd.Parameters.AddWithValue("@societe_id", user.societe_id);
+                    cmd.Parameters.AddWithValue("@societe_id", user.Societe);
                     sqlDataReader = cmd.ExecuteReader();
                     dt.Load(sqlDataReader);
                     sqlDataReader.Close();
@@ -87,10 +87,10 @@ namespace backend.Controllers
                 using (SqlCommand cmd = new SqlCommand(query, Con))
                 {
                     cmd.Parameters.AddWithValue("@UserId", user.UserId);
-                    cmd.Parameters.AddWithValue("@UserName", user.UserName);
-                    cmd.Parameters.AddWithValue("@FirstName", user.FirstName);
-                    cmd.Parameters.AddWithValue("@LastName", user.LastName);
-                    cmd.Parameters.AddWithValue("@Password", user.Password);
+                    cmd.Parameters.AddWithValue("@UserName", user.identifiant);
+                    cmd.Parameters.AddWithValue("@FirstName", user.nom);
+                    cmd.Parameters.AddWithValue("@LastName", user.prenom);
+                    cmd.Parameters.AddWithValue("@Password", user.motpasse);
                     cmd.Parameters.AddWithValue("@role", user.role);
                     cmd.Parameters.AddWithValue("@CIN", user.CIN);
                     sqlDataReader = cmd.ExecuteReader();

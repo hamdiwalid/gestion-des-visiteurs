@@ -3,10 +3,12 @@
     public class Demande
     {
         public int id { get; set; }
-        public string? description { get; set; }
-        public string? motive { get; set; }
-        public int user_id { get; set; }
-        public int societe_id  { get; set; }
+        public string? description { get; set; } = string.Empty;
+        public string? motive { get; set; } = string.Empty;
+        public virtual User? User { get; set; }
+        public virtual Societe? Societe { get; set; }
+
+
 
     }
 }

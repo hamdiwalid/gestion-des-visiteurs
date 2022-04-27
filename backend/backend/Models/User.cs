@@ -3,12 +3,13 @@
     public class User
     {
         public int UserId { get; set; }
-        public string? UserName { get; set; }
-        public string? FirstName { get; set; }
-        public string? LastName { get; set; }
-        public string? Password { get; set; }
-        public string? role { get; set; }
-        public string? CIN { get; set; }
-        public int? societe_id { get; set; }
+        public string? identifiant { get; set; } = string.Empty;
+        public string? nom { get; set; } = string.Empty;
+        public string? prenom { get; set; } = string.Empty;
+        public string? motpasse { get; set; } = string.Empty;
+        public string? role { get; set; } = string.Empty;
+        public string? CIN { get; set; } = string.Empty;
+        public virtual Societe? Societe { get; set; }
+
     }
 }
