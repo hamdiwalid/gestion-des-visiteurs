@@ -1,4 +1,6 @@
-﻿namespace backend.Models
+﻿using System.Data;
+
+namespace backend.Models
 {
     public class User
     {
@@ -10,6 +12,11 @@
         public string? role { get; set; } = string.Empty;
         public string? CIN { get; set; } = string.Empty;
         public virtual Societe? Societe { get; set; }
+        public int? SocieteId { get; set; }
 
+        public static implicit operator User(DataRow v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

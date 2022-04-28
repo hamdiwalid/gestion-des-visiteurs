@@ -19,29 +19,30 @@
               <div class="mt-8 card card-plain">
                 <div class="pb-0 card-header text-start">
                   <h3 class="font-weight-bolder text-success text-gradient">
-                    Welcome back
+                    Bienvenue
                   </h3>
-                  <p class="mb-0">Enter your email and password to sign in</p>
+                  <p class="mb-0">Entrez votre identifiant et votre mot de passe pour ouvrir une session</p>
                 </div>
                 <div class="card-body">
-                  <form role="form" class="text-start">
-                    <label>Email</label>
-                    <vsud-input
-                      id="email"
-                      type="email"
-                      placeholder="Email"
-                      name="email"
+                  <form role="form" @submit.prevent="login" class="text-start">
+                    <label>Identifiant</label>
+                    <input
+                      id="identifiant"
+                      type="string"
+                      placeholder="Identifiant"
+                      class="form-control"
+                      name="identifiant"
+                      v-model="identifiant"
                     />
-                    <label>Password</label>
-                    <vsud-input
+                    <label>Mot de passe</label>
+                    <input
                       id="password"
                       type="password"
                       placeholder="Password"
+                      class="form-control"
                       name="password"
+                      v-model="password"
                     />
-                    <vsud-switch id="rememberMe" name="rememberMe" checked>
-                      Remember me
-                    </vsud-switch>
                     <div class="text-center">
                       <vsud-button
                         class="my-4 mb-2"
@@ -53,18 +54,9 @@
                     </div>
                   </form>
                 </div>
-                <div class="px-1 pt-0 text-center card-footer px-lg-2">
-                  <p class="mx-auto mb-4 text-sm">
-                    Don't have an account?
-                    <router-link
-                      :to="{ name: 'Sign Up' }"
-                      class="text-success text-gradient font-weight-bold"
-                      >Sign up</router-link
-                    >
-                  </p>
-                </div>
               </div>
             </div>
+            
             <div class="col-md-6">
               <div
                 class="top-0 oblique position-absolute h-100 d-md-block d-none me-n8"
@@ -85,25 +77,26 @@
       </div>
     </section>
   </main>
-  <app-footer />
 </template>
 
 <script>
 import Navbar from "@/examples/PageLayout/Navbar.vue";
-import AppFooter from "@/examples/PageLayout/Footer.vue";
-import VsudInput from "@/components/VsudInput.vue";
-import VsudSwitch from "@/components/VsudSwitch.vue";
+
 import VsudButton from "@/components/VsudButton.vue";
 const body = document.getElementsByTagName("body")[0];
 import { mapMutations } from "vuex";
-
+import axios from 'axios';
 export default {
   name: "SignIn",
+  data(){
+    return{
+      identifiant:'',
+      password: ''
+    }
+      
+  },
   components: {
     Navbar,
-    AppFooter,
-    VsudInput,
-    VsudSwitch,
     VsudButton,
   },
   created() {
@@ -118,6 +111,15 @@ export default {
   },
   methods: {
     ...mapMutations(["toggleEveryDisplay", "toggleHideConfig"]),
+     login(){
+        axios.post('login',{
+        identifiant:this.identifiant,
+        password: this.password
+      },{headers:'Access-Control-Allow-Origin'}).then(reponse =>{
+         console.log(reponse)
+      })
+      
+    }
   },
 };
 </script>

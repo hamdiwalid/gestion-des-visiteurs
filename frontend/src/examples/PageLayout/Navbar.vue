@@ -11,7 +11,7 @@
         v-bind="$attrs"
         :class="isBlur ? 'text-dark' : 'text-white'"
       >
-        Admin
+        Gestion des visiteurs
       </router-link>
       <button
         class="navbar-toggler shadow-none ms-2"
@@ -28,44 +28,7 @@
           <span class="navbar-toggler-bar bar3"></span>
         </span>
       </button>
-      <div class="collapse navbar-collapse" id="navigation">
-        <ul class="navbar-nav mx-auto">
-          <li class="nav-item">
-            <router-link
-              class="nav-link d-flex align-items-center me-2 active"
-              aria-current="page"
-              to="/dashboard"
-            >
-              <i
-                class="fa fa-chart-pie opacity-6 me-1"
-                aria-hidden="true"
-                :class="isBlur ? 'text-dark' : 'text-white'"
-              ></i>
-              Dashboard
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link me-2" to="/profile">
-              <i
-                class="fa fa-user opacity-6 me-1"
-                aria-hidden="true"
-                :class="isBlur ? 'text-dark' : 'text-white'"
-              ></i>
-              Profile
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link me-2" to="/sign-in">
-              <i
-                class="fas fa-key opacity-6 me-1"
-                aria-hidden="true"
-                :class="isBlur ? 'text-dark' : 'text-white'"
-              ></i>
-              Sign In
-            </router-link>
-          </li>
-        </ul>
-      </div>
+
     </div>
   </nav>
   <!-- End Navbar -->

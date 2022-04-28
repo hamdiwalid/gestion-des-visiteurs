@@ -45,7 +45,7 @@ namespace backend.Controllers
         {
             string query = @"
                              Insert into dbo.[User]
-                             values(@userName,@firstName,@lastName,@password,@role,@cin,@societe_id)
+                             values(@identifiant,@nom,@prenom,@motpasse,@role,@cin,@Societeid)
                             ";
             DataTable dt = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("AppCon");
@@ -55,13 +55,13 @@ namespace backend.Controllers
                 Con.Open();
                 using (SqlCommand cmd = new SqlCommand(query, Con))
                 {
-                    cmd.Parameters.AddWithValue("@UserName", user.identifiant);
-                    cmd.Parameters.AddWithValue("@FirstName", user.nom);
-                    cmd.Parameters.AddWithValue("@LastName", user.prenom);
-                    cmd.Parameters.AddWithValue("@Password", user.motpasse);
+                    cmd.Parameters.AddWithValue("@identifiant", user.identifiant);
+                    cmd.Parameters.AddWithValue("@nom", user.nom);
+                    cmd.Parameters.AddWithValue("@prenom", user.prenom);
+                    cmd.Parameters.AddWithValue("@motpasse", user.motpasse);
                     cmd.Parameters.AddWithValue("@role", user.role);
                     cmd.Parameters.AddWithValue("@CIN", user.CIN);
-                    cmd.Parameters.AddWithValue("@societe_id", user.Societe);
+                    cmd.Parameters.AddWithValue("@Societeid", user.SocieteId);
                     sqlDataReader = cmd.ExecuteReader();
                     dt.Load(sqlDataReader);
                     sqlDataReader.Close();
@@ -128,27 +128,8 @@ namespace backend.Controllers
             }
             return new JsonResult("Supprimer avec succès");
         }
-        [AllowAnonymous]
-        [HttpPost]
-        public IActionResult login([FromBody] User userlogin)
-        {
-            var user = Authenticate(userlogin);
-            if (user != null)
-            {
-                var token = Generate(user);
-                    return Ok(token);
-            }
-            return NotFound("Verifier votre coordonne");
-        }
+ 
+        
 
-        private string Generate(User user)
-        {
-            throw new NotImplementedException();
-        }
-
-        private User Authenticate(User userlogin)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

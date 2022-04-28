@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using backend.Data;
 using Newtonsoft.Json.Serialization;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +12,7 @@ builder.Services.AddDbContext<backendContext>(options =>
 // Add services to the container.
 builder.Services.AddCors(c =>
 {
-    c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+    c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:8080/"));
 });
 builder.Services.AddControllersWithViews().AddNewtonsoftJson(options =>
 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore)

@@ -1,0 +1,54 @@
+﻿@model backend.Models.User
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>User</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.identifiant)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.identifiant)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.nom)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.nom)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.prenom)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.prenom)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.motpasse)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.motpasse)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.role)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.role)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CIN)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CIN)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.UserId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
