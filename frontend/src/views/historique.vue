@@ -2,20 +2,20 @@
   <div class="py-4 container-fluid">
     <div class="row">
       <div class="col-12">
-        <authors-table />
+        <historiqued />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import AuthorsTable from "./components/AuthorsTable";
+import historiqued from "./components/historique";
 
 
 export default {
   name: "Historique",
   components: {
-    AuthorsTable,
+    historiqued,
   },
 };
 </script>

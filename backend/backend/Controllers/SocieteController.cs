@@ -66,7 +66,7 @@ namespace backend.Controllers
             return new JsonResult("Ajoute avec succès");
         }
         [HttpPut]
-        public JsonResult Put(Societe societe)
+        public JsonResult Put(Societe societe, int id)
         {
             string query = @"
                              Update dbo.[Societes]

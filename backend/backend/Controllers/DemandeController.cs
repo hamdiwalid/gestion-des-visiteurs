@@ -54,8 +54,8 @@ namespace backend.Controllers
                 {
                     cmd.Parameters.AddWithValue("@description", demande.description);
                     cmd.Parameters.AddWithValue("@motive", demande.motive);
-                   // cmd.Parameters.AddWithValue("@user_id", demande.user_id);
-                   // cmd.Parameters.AddWithValue("@societe_id", demande.societe_id);
+                    cmd.Parameters.AddWithValue("@user_id", demande.UserId);
+                    cmd.Parameters.AddWithValue("@societe_id", demande.SocieteId);
 
                     sqlDataReader = cmd.ExecuteReader();
                     dt.Load(sqlDataReader);
@@ -67,7 +67,7 @@ namespace backend.Controllers
             return new JsonResult("Ajoute avec succès");
         }
         [HttpPut]
-        public JsonResult Put(Demande demande)
+        public JsonResult Put(Demande demande, int id)
         {
             string query = @"
                              Update dbo.[Demandes]

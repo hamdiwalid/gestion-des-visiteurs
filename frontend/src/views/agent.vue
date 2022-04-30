@@ -2,20 +2,20 @@
   <div class="py-4 container-fluid">
     <div class="row">
       <div class="col-12">
-        <authors-table />
+        <agent />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import AuthorsTable from "./components/AuthorsTable";
+import agent from "./components/agent";
 
 
 export default {
   name: "Agents",
   components: {
-    AuthorsTable,
+    agent,
   },
 };
 </script>

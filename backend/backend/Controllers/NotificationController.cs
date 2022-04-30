@@ -54,9 +54,9 @@ namespace backend.Controllers
                 {
                     cmd.Parameters.AddWithValue("@etat", notification.etat);
                     cmd.Parameters.AddWithValue("@titre", notification.titre);
-                    cmd.Parameters.AddWithValue("@user_id", notification.User);
-                    cmd.Parameters.AddWithValue("@demande_id", notification.Demande);
-                    cmd.Parameters.AddWithValue("@societe_id", notification.Societe);
+                    cmd.Parameters.AddWithValue("@user_id", notification.UserId);
+                    cmd.Parameters.AddWithValue("@demande_id", notification.Demandeid);
+                    cmd.Parameters.AddWithValue("@societe_id", notification.Societeid);
 
                     sqlDataReader = cmd.ExecuteReader();
                     dt.Load(sqlDataReader);
@@ -68,7 +68,7 @@ namespace backend.Controllers
             return new JsonResult("Ajoute avec succès");
         }
         [HttpPut]
-        public JsonResult Put(Notification notification)
+        public JsonResult Put(Notification notification, int id)
         {
             string query = @"
                              Update dbo.[Notifications]

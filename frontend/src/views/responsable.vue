@@ -2,20 +2,20 @@
   <div class="py-4 container-fluid">
     <div class="row">
       <div class="col-12">
-        <authors-table />
+        <responsable />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import AuthorsTable from "./components/AuthorsTable";
+import responsable from "./components/responsable";
 
 
 export default {
   name: "Responsables",
   components: {
-    AuthorsTable,
+    responsable,
   },
 };
 </script>

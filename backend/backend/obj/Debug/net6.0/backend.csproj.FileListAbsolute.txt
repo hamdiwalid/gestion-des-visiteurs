@@ -272,3 +272,7 @@ C:\Users\USER\Desktop\projet\backend\backend\obj\Debug\net6.0\backend.genruntime
 C:\Users\USER\Desktop\projet\backend\backend\obj\Debug\net6.0\ref\backend.dll
 C:\Users\USER\Desktop\projet\backend\backend\obj\Debug\net6.0\backend.RazorAssemblyInfo.cache
 C:\Users\USER\Desktop\projet\backend\backend\obj\Debug\net6.0\backend.RazorAssemblyInfo.cs
+C:\Users\USER\Desktop\projet\backend\backend\bin\Debug\net6.0\System.Web.Cors.dll
+C:\Users\USER\Desktop\projet\backend\backend\bin\Debug\net6.0\System.Net.Http.Formatting.dll
+C:\Users\USER\Desktop\projet\backend\backend\bin\Debug\net6.0\System.Web.Http.dll
+C:\Users\USER\Desktop\projet\backend\backend\bin\Debug\net6.0\System.Web.Http.Cors.dll

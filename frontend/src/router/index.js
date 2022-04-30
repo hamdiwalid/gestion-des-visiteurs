@@ -17,7 +17,7 @@ const routes = [
   {
     path: "/",
     name: "/",
-    redirect: "/dashboard",
+    redirect: "/sign-in",
   },
   {
     path: "/dashboard",
@@ -61,12 +61,12 @@ const routes = [
   },
   {
     path: "/demandeAgent",
-    name: "DemandesAgent",
+    name: "Demandes agent",
     component: DemandesAgent,
   },
   {
     path: "/demandeSociete",
-    name: "DemandesSociete",
+    name: "Demandes sociéte",
     component: DemandesSociete,
   },
   {
@@ -76,12 +76,12 @@ const routes = [
   },
   {
     path: "/historiqueAgent",
-    name: "HistoriqueAgent",
+    name: "Historique agent",
     component: HistoriqueAgent,
   },
   {
     path: "/historiqueSociete",
-    name: "HistoriqueSociete",
+    name: "Historique sociéte",
     component: HistoriqueSociete,
   },
   

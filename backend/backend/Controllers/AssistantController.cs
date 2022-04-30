@@ -1,28 +1,25 @@
-﻿using backend.Models;
-using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Data.SqlClient;
-
+using backend.Models;
 namespace backend.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class LoginController : Controller
+    public class AssistantController : Controller
     {
         private readonly IConfiguration? _configuration;
-        public LoginController(IConfiguration configuration)
+        public AssistantController(IConfiguration configuration)
         {
             _configuration = configuration;
         }
-        [HttpPost]
-        public JsonResult login(Userlogin user)
+        [HttpGet]
+        public JsonResult Get()
         {
-
             string query = @"
-                            Select * from 
+                             Select * from 
                             dbo.[User]
-                            where identifiant=@Username and motpasse=@Password
+                            where role = 'assistant'
                             ";
             DataTable dt = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("AppCon");
@@ -32,8 +29,6 @@ namespace backend.Controllers
                 Con.Open();
                 using (SqlCommand cmd = new SqlCommand(query, Con))
                 {
-                    cmd.Parameters.AddWithValue("@UserName", user.identifiant);
-                    cmd.Parameters.AddWithValue("@Password", user.motpasse);
                     sqlDataReader = cmd.ExecuteReader();
                     dt.Load(sqlDataReader);
                     sqlDataReader.Close();
@@ -41,19 +36,7 @@ namespace backend.Controllers
                 }
 
             }
-            if ( dt != null)
-            {
-                return new JsonResult(dt);
-            }
-            else
-            {
-                return new JsonResult("Verifier votre coordonne");
-            }
-            
+            return new JsonResult(dt);
         }
-    }
-
-    public class HttpConfiguration
-    {
     }
 }

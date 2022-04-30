@@ -2,7 +2,6 @@
 using System.Data;
 using System.Data.SqlClient;
 using backend.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace backend.Controllers
 {
@@ -72,11 +71,11 @@ namespace backend.Controllers
             return new JsonResult("Ajoute avec succès");
         }
         [HttpPut]
-        public JsonResult Put(User user)
+        public JsonResult Put(User user, int id)
         {
             string query = @"
                              Update dbo.[User]
-                             set userName = @userName, firstName = @firstName, lastName = @lastName,password = @password,role = @role,cin = @cin
+                             set identifiant = @userName, nom = @firstName, prenom = @lastName,motpasse = @password,role = @role,cin = @cin
                              where UserId=@UserId
                             ";
             DataTable dt = new DataTable();
@@ -87,7 +86,7 @@ namespace backend.Controllers
                 Con.Open();
                 using (SqlCommand cmd = new SqlCommand(query, Con))
                 {
-                    cmd.Parameters.AddWithValue("@UserId", user.UserId);
+                    cmd.Parameters.AddWithValue("@UserId", id);
                     cmd.Parameters.AddWithValue("@UserName", user.identifiant);
                     cmd.Parameters.AddWithValue("@FirstName", user.nom);
                     cmd.Parameters.AddWithValue("@LastName", user.prenom);
@@ -128,7 +127,7 @@ namespace backend.Controllers
             }
             return new JsonResult("Supprimer avec succès");
         }
- 
+
         
 
     }

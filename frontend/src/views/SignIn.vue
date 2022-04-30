@@ -40,8 +40,8 @@
                       type="password"
                       placeholder="Password"
                       class="form-control"
-                      name="password"
-                      v-model="password"
+                      name="motpasse"
+                      v-model="motpasse"
                     />
                     <div class="text-center">
                       <vsud-button
@@ -49,7 +49,7 @@
                         variant="gradient"
                         color="success"
                         full-width
-                        >Sign in
+                        >Connexion
                       </vsud-button>
                     </div>
                   </form>
@@ -91,7 +91,7 @@ export default {
   data(){
     return{
       identifiant:'',
-      password: ''
+      motpasse: ''
     }
       
   },
@@ -114,9 +114,20 @@ export default {
      login(){
         axios.post('login',{
         identifiant:this.identifiant,
-        password: this.password
-      },{headers:'Access-Control-Allow-Origin'}).then(reponse =>{
-         console.log(reponse)
+        motpasse: this.motpasse
+      }
+      ).then(reponse =>{
+        localStorage.setItem("currentUser",JSON.stringify(reponse.data[0]))
+        localStorage.setItem("role", reponse.data[0].role)
+         if(reponse.data[0].role == "admin"){
+           this.$router.push({ path: '/demandes' })
+         } else if(reponse.data[0].role == "responsable"){
+           this.$router.push({ path: '/demandeSociete' })
+         } else if(reponse.data[0].role == "assistant"){
+           this.$router.push({ path: '/demandeSociete' })
+         } else if(reponse.data[0].role == "agent"){
+           this.$router.push({ path: '/demandeAgent' })
+         }
       })
       
     }

@@ -12,7 +12,7 @@
       ></i>
       <a class="m-0 navbar-brand" href="/">
         <img :src="logo" class="navbar-brand-img h-100" alt="main_logo" />
-        <span class="ms-1 font-weight-bold">Admin</span>
+        <span class="ms-1 font-weight-bold" style="text-transform: uppercase;">{{role}}</span>
       </a>
     </div>
     <hr class="mt-0 horizontal dark" />
@@ -39,6 +39,10 @@ export default {
       type: String,
       default: "",
     },
+  },
+  async created(){
+      this.user = localStorage.getItem("currentUser");
+      this.role = localStorage.getItem("role");
   },
   computed: {
     ...mapState(["isRTL"]),
