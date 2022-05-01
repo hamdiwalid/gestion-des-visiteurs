@@ -44,7 +44,7 @@ namespace backend.Controllers
         {
             string query = @"
                              Insert into dbo.[User]
-                             values(@identifiant,@nom,@prenom,@motpasse,@role,@cin,@Societeid)
+                             values(@identifiant,@nom,@prenom,@motpasse,@role,@CIN,@Societeid)
                             ";
             DataTable dt = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("AppCon");

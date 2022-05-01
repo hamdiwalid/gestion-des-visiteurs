@@ -40,11 +40,6 @@ namespace backend.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_User", x => x.UserId);
-                    table.ForeignKey(
-                        name: "FK_User_Societes_Societeid",
-                        column: x => x.Societeid,
-                        principalTable: "Societes",
-                        principalColumn: "id");
                 });
 
             migrationBuilder.CreateTable(
@@ -129,11 +124,6 @@ namespace backend.Migrations
                 name: "IX_Notifications_UserId",
                 table: "Notifications",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_User_Societeid",
-                table: "User",
-                column: "Societeid");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

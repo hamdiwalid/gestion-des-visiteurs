@@ -138,8 +138,6 @@ namespace backend.Migrations
 
                     b.HasKey("UserId");
 
-                    b.HasIndex("Societeid");
-
                     b.ToTable("User");
                 });
 
@@ -179,14 +177,6 @@ namespace backend.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("backend.Models.User", b =>
-                {
-                    b.HasOne("backend.Models.Societe", "Societe")
-                        .WithMany()
-                        .HasForeignKey("Societeid");
-
-                    b.Navigation("Societe");
-                });
 #pragma warning restore 612, 618
         }
     }

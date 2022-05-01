@@ -6,7 +6,7 @@
           <h6 class="mb-0">{{ title }}</h6>
         </div>
         <div class="col-md-4 text-end">
-          <a :href="action.route">
+          <a @click="toggleModal" type="button">
             <i
               class="text-sm fas fa-user-edit text-secondary"
               data-bs-toggle="tooltip"
@@ -51,15 +51,112 @@
       </ul>
     </div>
   </div>
+  <ModalC @close="toggleModal" :modalActive="modalActive">
+      <div class="modal-content">
+        <h4>Ajouter agent</h4>
+        <form role="form" @submit.prevent="login" class="text-start">
+                    <label>Identifiant</label>
+                    <input
+                      id="identifiant"
+                      type="string"
+                      placeholder="Identifiant"
+                      class="form-control"
+                      name="identifiant"
+                      v-model="identifiant"
+                    />
+                    <label>Mot de passe</label>
+                    <input
+                      id="password"
+                      type="password"
+                      placeholder="Password"
+                      class="form-control"
+                      name="motpasse"
+                      v-model="motpasse"
+                    />
+                    <label>Mot de passe</label>
+                    <input
+                      id="password"
+                      type="password"
+                      placeholder="Password"
+                      class="form-control"
+                      name="motpasse"
+                      v-model="motpasse"
+                    />
+                    <label>Mot de passe</label>
+                    <input
+                      id="password"
+                      type="password"
+                      placeholder="Password"
+                      class="form-control"
+                      name="motpasse"
+                      v-model="motpasse"
+                    />
+                    <label>Mot de passe</label>
+                    <input
+                      id="password"
+                      type="password"
+                      placeholder="Password"
+                      class="form-control"
+                      name="motpasse"
+                      v-model="motpasse"
+                    />
+                    <label>Mot de passe</label>
+                    <input
+                      id="password"
+                      type="password"
+                      placeholder="Password"
+                      class="form-control"
+                      name="motpasse"
+                      v-model="motpasse"
+                    />
+                    <label>Mot de passe</label>
+                    <input
+                      id="password"
+                      type="password"
+                      placeholder="Password"
+                      class="form-control"
+                      name="motpasse"
+                      v-model="motpasse"
+                    />
+                    <label>Mot de passe</label>
+                    <input
+                      id="password"
+                      type="password"
+                      placeholder="Password"
+                      class="form-control"
+                      name="motpasse"
+                      v-model="motpasse"
+                    />
+                    <div class="text-center">
+                      <button
+                        class="btn btn-success mb-4"
+                        variant="gradient"
+                        color="success"
+                        id="btn2"
+                        >Connexion
+                      </button>
+                    </div>
+                  </form>
+      </div>
+    </ModalC>
 </template>
 
 <script>
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-
+import ModalC from "./ModalC.vue";
+import { ref } from "vue";
 export default {
   name: "ProfileInfoCard",
   components: {
     FontAwesomeIcon,
+    ModalC
+  },
+  setup() {
+    const modalActive = ref(false);
+    const toggleModal = () => {
+      modalActive.value = !modalActive.value;
+    };
+    return { modalActive, toggleModal };
   },
   props: {
     title: {
