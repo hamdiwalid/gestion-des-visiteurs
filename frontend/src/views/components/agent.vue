@@ -12,11 +12,6 @@
               <th
                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
               >
-                ID
-              </th>
-              <th
-                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-              >
                 Nom
               </th>
               <th
@@ -34,9 +29,6 @@
           </thead>
           <tbody>
             <tr v-for="agent in agents" :key="agent.UserId">
-              <td class="align-middle text-center">
-                {{agent.UserId}}
-              </td>
               <td class="align-middle text-center">
                  {{agent.nom}}
               </td>
@@ -56,7 +48,7 @@
   <ModalC @close="toggleModal" :modalActive="modalActive">
       <div class="modal-content">
         <h4>Ajouter agent</h4>
-        <form role="form" @submit.prevent="login" class="text-start">
+        <form role="form" @submit.prevent="ajouter" class="text-start">
                     <label>Identifiant</label>
                     <input
                       id="identifiant"
@@ -66,14 +58,23 @@
                       name="identifiant"
                       v-model="identifiant"
                     />
-                    <label>Mot de passe</label>
+                    <label>Nom</label>
                     <input
-                      id="password"
-                      type="password"
-                      placeholder="Password"
+                      id="nom"
+                      type="string"
+                      placeholder="Nom"
                       class="form-control"
-                      name="motpasse"
-                      v-model="motpasse"
+                      name="nom"
+                      v-model="nom"
+                    />
+                    <label>Prénom</label>
+                    <input
+                      id="prenom"
+                      type="string"
+                      placeholder="Prénom"
+                      class="form-control"
+                      name="prenom"
+                      v-model="prenom"
                     />
                     <label>Mot de passe</label>
                     <input
@@ -84,59 +85,24 @@
                       name="motpasse"
                       v-model="motpasse"
                     />
-                    <label>Mot de passe</label>
+                    <label>CIN</label>
                     <input
-                      id="password"
-                      type="password"
-                      placeholder="Password"
+                      id="cin"
+                      type="number"
+                      placeholder="CIN"
                       class="form-control"
-                      name="motpasse"
-                      v-model="motpasse"
+                      name="cin"
+                      v-model="cin"
                     />
-                    <label>Mot de passe</label>
-                    <input
-                      id="password"
-                      type="password"
-                      placeholder="Password"
-                      class="form-control"
-                      name="motpasse"
-                      v-model="motpasse"
-                    />
-                    <label>Mot de passe</label>
-                    <input
-                      id="password"
-                      type="password"
-                      placeholder="Password"
-                      class="form-control"
-                      name="motpasse"
-                      v-model="motpasse"
-                    />
-                    <label>Mot de passe</label>
-                    <input
-                      id="password"
-                      type="password"
-                      placeholder="Password"
-                      class="form-control"
-                      name="motpasse"
-                      v-model="motpasse"
-                    />
-                    <label>Mot de passe</label>
-                    <input
-                      id="password"
-                      type="password"
-                      placeholder="Password"
-                      class="form-control"
-                      name="motpasse"
-                      v-model="motpasse"
-                    />
+
                     <div class="text-center">
-                      <button
+                      <vsud-button
                         class="btn btn-success mb-4"
                         variant="gradient"
                         color="success"
                         id="btn2"
-                        >Connexion
-                      </button>
+                        >Ajouter
+                      </vsud-button>
                     </div>
                   </form>
       </div>
@@ -153,6 +119,7 @@ import img6 from "../../assets/img/team-4.jpg";
 import axios from 'axios';
 import ModalC from "./ModalC.vue";
 import { ref } from "vue";
+import VsudButton from "@/components/VsudButton.vue";
 export default {
   name: "demande",
   data() {
@@ -163,11 +130,17 @@ export default {
       img4,
       img5,
       img6,
-      agents:null
+      agents:null,
+      identifiant:'',
+      nom:'',
+      prenom:'',
+      motpasse:'',
+      cin:null
     };
   },
   components: {
-    ModalC
+    ModalC,
+    VsudButton
   },
   setup() {
     const modalActive = ref(false);
@@ -180,11 +153,23 @@ export default {
       axios.get('Agent')
       .then(reponse=>{
          this.agents = reponse.data;
-        console.log(this.agents);
       })
   },
   methods:{
-
+ajouter(){
+      axios.post('User',{
+        identifiant:this.identifiant,
+        nom:this.nom,
+        prenom:this.prenom,
+        motpasse:this.motpasse,
+        role:"agent",
+        CIN:this.cin,
+        societeId:0
+      })
+      .then(reponse=>{
+        console.log(reponse)
+      })
+    }
   }
 };
 </script>
@@ -200,5 +185,24 @@ export default {
 }
 .modal-inner {
     top: 141px !important;
+}
+/* Firefox */
+input[type=number] {
+-moz-appearance: textfield;
+font-weight: 200;
+}
+
+/* Chrome */
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button { 
+-webkit-appearance: none;
+margin:0;
+}
+
+/* Opéra*/
+input::-o-inner-spin-button,
+input::-o-outer-spin-button { 
+-o-appearance: none;
+margin:0
 }
 </style>

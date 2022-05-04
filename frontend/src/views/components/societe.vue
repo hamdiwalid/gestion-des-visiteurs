@@ -1,8 +1,8 @@
 <template>
   <div class="card mb-4">
     <div class="card-header pb-0">
-      <h6>Demandes</h6>
-            <button @click="toggleModal" type="button" id="btn1" class="btn btn-success mb-4">+</button>
+      <h6>Sociétes</h6>
+      <button @click="toggleModal" type="button" id="btn1" class="btn btn-success mb-4">+</button>
     </div>
     <div class="card-body px-0 pt-0 pb-2">
       <div class="table-responsive p-0">
@@ -12,7 +12,7 @@
               <th
                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
               >
-                Motivé
+                Nom
               </th>
               <th
                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
@@ -22,62 +22,41 @@
               <th
                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
               >
-                Utilisateur
-              </th>
-              <th
-                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-              >
-                Sociéte
+                Matricule
               </th>
               <th class="text-secondary opacity-7"></th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="demande in demandes" :key="demande.id">
+            <tr v-for="societe in societes" :key="societe.id">
               <td class="align-middle text-center">
-                {{demande.id}}
+                {{societe.nom}}
               </td>
               <td class="align-middle text-center">
-                 {{demande.motive}}
+                 {{societe.description}}
               </td>
               <td class="align-middle text-center">
-                {{demande.description}}
+                {{societe.matricule}}
               </td>
-              <td class="align-middle text-center">
-                <div v-for="user in users" :key="user.UserId">
-                  <div v-if="user.UserId == demande.UserId">
-                    {{ user.nom }} 
-                  </div>
-                  </div>
-                
-              </td>
-              <td class="align-middle text-center">
-               <div v-for="societe in societes" :key="societe.id">
-                  <div v-if="societe.id == demande.Societeid">
-                    {{ societe.nom }} 
-                  </div>
-                  </div>
-              </td>
-              <td></td>
+              <td class="align-middle text-center"></td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
   </div>
-
-<ModalC @close="toggleModal" :modalActive="modalActive">
+   <ModalC @close="toggleModal" :modalActive="modalActive">
       <div class="modal-content">
-        <h4>Ajouter une demande</h4>
+        <h4>Ajouter responsable</h4>
         <form role="form" @submit.prevent="ajouter" class="text-start">
-                    <label>Motivé</label>
+                    <label>Nom</label>
                     <input
-                      id="motive"
+                      id="nom"
                       type="string"
-                      placeholder="Motivé"
+                      placeholder="Nom"
                       class="form-control"
-                      name="motive"
-                      v-model="motive"
+                      name="nom"
+                      v-model="nom"
                     />
                     <label>Description</label>
                     <textarea id="description"
@@ -87,10 +66,15 @@
                       name="description"
                       v-model="description"
                       />
-                      <label>Sociéte</label>
-                    <select class="form-control" id="societech" name="societech" v-model="societech">
-                      <option v-for="societe in societes" :key="societe.id" v-bind:value="societe.id">{{ societe.nom }} </option>
-                    </select>
+                      <label>Matricule</label>
+                    <input
+                      id="matricule"
+                      type="string"
+                      placeholder="Matricule"
+                      class="form-control"
+                      name="matricule"
+                      v-model="matricule"
+                    />
                     <div class="text-center">
                       <vsud-button
                         class="btn btn-success mb-4"
@@ -103,7 +87,6 @@
                   </form>
       </div>
     </ModalC>
-
 </template>
 
 <script>
@@ -118,7 +101,7 @@ import ModalC from "./ModalC.vue";
 import { ref } from "vue";
 import VsudButton from "@/components/VsudButton.vue";
 export default {
-  name: "demande",
+  name: "societe",
   data() {
     return {
       img1,
@@ -127,13 +110,10 @@ export default {
       img4,
       img5,
       img6,
-      demandes:null,
-      users:null,
       societes:null,
-      motive:'',
+      nom:'',
       description:'',
-      societech:null,
-      date: new Date()
+      matricule:''
     };
   },
   components: {
@@ -148,29 +128,17 @@ export default {
     return { modalActive, toggleModal };
   },
   async created(){
-      axios.get('Demande')
-      .then(reponse=>{
-         this.demandes = reponse.data;
-      });
-      axios.get('User')
-      .then(reponse=>{
-         this.users = reponse.data;
-      });
       axios.get('Societe')
-      .then(reponse =>{
-        this.societes = reponse.data;
+      .then(reponse=>{
+         this.societes = reponse.data;
       })
-      this.user = localStorage.getItem("currentUser");
   },
   methods:{
     ajouter(){
-      axios.post('Demande',{
+      axios.post('Societe',{
+        nom:this.nom,
         description:this.description,
-        motive:this.motive,
-        userId:this.user[10],
-        societeId:this.societech,
-        date:this.date,
-        etat:'nonpresent',
+        matricule:this.matricule
       })
       .then(reponse=>{
         console.log(reponse)
@@ -190,6 +158,6 @@ export default {
     border: 0px !important;
 }
 .modal-inner {
-    top: 0 !important;
+    top: 141px !important;
 }
 </style>

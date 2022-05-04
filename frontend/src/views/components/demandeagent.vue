@@ -18,11 +18,6 @@
               <th
                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
               >
-                ID
-              </th>
-              <th
-                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-              >
                 Motivé
               </th>
               <th
@@ -46,19 +41,24 @@
           <tbody>
             <tr v-for="demande in demandes" :key="demande.id">
               <td class="align-middle text-center">
-                {{demande.id}}
-              </td>
-              <td class="align-middle text-center">
                  {{demande.motive}}
               </td>
               <td class="align-middle text-center">
                 {{demande.description}}
               </td>
               <td class="align-middle text-center">
-                {{demande.UserId}}
+                <div v-for="user in users" :key="user.UserId">
+                  <div v-if="user.UserId == demande.UserId">
+                    {{ user.nom }} 
+                  </div>
+                  </div>
               </td>
               <td class="align-middle text-center">
-               {{demande.Societeid}}
+               <div v-for="societe in societes" :key="societe.id">
+                  <div v-if="societe.id == demande.Societeid">
+                    {{ societe.nom }} 
+                  </div>
+                  </div>
               </td>
               <td></td>
             </tr>
@@ -67,90 +67,39 @@
       </div>
     </div>
   </div>
-  <ModalC @close="toggleModal" :modalActive="modalActive">
+<ModalC @close="toggleModal" :modalActive="modalActive">
       <div class="modal-content">
         <h4>Ajouter une demande</h4>
-        <form role="form" @submit.prevent="login" class="text-start">
-                    <label>Identifiant</label>
+        <form role="form" @submit.prevent="ajouter" class="text-start">
+                    <label>Motivé</label>
                     <input
-                      id="identifiant"
+                      id="motive"
                       type="string"
-                      placeholder="Identifiant"
+                      placeholder="Motivé"
                       class="form-control"
-                      name="identifiant"
-                      v-model="identifiant"
+                      name="motive"
+                      v-model="motive"
                     />
-                    <label>Mot de passe</label>
-                    <input
-                      id="password"
+                    <label>Description</label>
+                    <textarea id="description"
                       type="password"
-                      placeholder="Password"
+                      placeholder="Description"
                       class="form-control"
-                      name="motpasse"
-                      v-model="motpasse"
-                    />
-                    <label>Mot de passe</label>
-                    <input
-                      id="password"
-                      type="password"
-                      placeholder="Password"
-                      class="form-control"
-                      name="motpasse"
-                      v-model="motpasse"
-                    />
-                    <label>Mot de passe</label>
-                    <input
-                      id="password"
-                      type="password"
-                      placeholder="Password"
-                      class="form-control"
-                      name="motpasse"
-                      v-model="motpasse"
-                    />
-                    <label>Mot de passe</label>
-                    <input
-                      id="password"
-                      type="password"
-                      placeholder="Password"
-                      class="form-control"
-                      name="motpasse"
-                      v-model="motpasse"
-                    />
-                    <label>Mot de passe</label>
-                    <input
-                      id="password"
-                      type="password"
-                      placeholder="Password"
-                      class="form-control"
-                      name="motpasse"
-                      v-model="motpasse"
-                    />
-                    <label>Mot de passe</label>
-                    <input
-                      id="password"
-                      type="password"
-                      placeholder="Password"
-                      class="form-control"
-                      name="motpasse"
-                      v-model="motpasse"
-                    />
-                    <label>Mot de passe</label>
-                    <input
-                      id="password"
-                      type="password"
-                      placeholder="Password"
-                      class="form-control"
-                      name="motpasse"
-                      v-model="motpasse"
-                    />
+                      name="description"
+                      v-model="description"
+                      />
+                      <label>Sociéte</label>
+                    <select class="form-control" id="societech" name="societech" v-model="societech">
+                      <option v-for="societe in societes" :key="societe.id" v-bind:value="societe.id">{{ societe.nom }} </option>
+                    </select>
                     <div class="text-center">
-                      <button
+                      <vsud-button
                         class="btn btn-success mb-4"
                         variant="gradient"
                         color="success"
                         id="btn2"
-                        >Connexion
-                      </button>
+                        >Ajouter
+                      </vsud-button>
                     </div>
                   </form>
       </div>
@@ -177,7 +126,13 @@ export default {
       img4,
       img5,
       img6,
-      demandes:null
+      demandes:null,
+      users:null,
+      societes:null,
+      motive:'',
+      description:'',
+      societech:null,
+      date: new Date()
     };
   },
   components: {
@@ -195,10 +150,31 @@ export default {
       .then(reponse=>{
          this.demandes = reponse.data;
         console.log(this.demandes);
-      })
+      });
+      axios.get('User')
+      .then(reponse=>{
+         this.users = reponse.data;
+      });
+      axios.get('Societe')
+      .then(reponse =>{
+        this.societes = reponse.data;
+      });
+       this.user = localStorage.getItem("currentUser");
   },
   methods:{
-
+    ajouter(){
+      axios.post('Demande',{
+        description:this.description,
+        motive:this.motive,
+        userId:this.user[10],
+        societeId:this.societech,
+        date:this.date,
+        etat:'nonpresent',
+      })
+      .then(reponse=>{
+        console.log(reponse)
+      })
+    }
   }
 };
 </script>

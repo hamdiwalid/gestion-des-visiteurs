@@ -54,6 +54,13 @@
         </sidenav-collapse>
       </li>
       <li class="nav-item" v-if="role == 'admin'">
+        <sidenav-collapse navText="Sociétes" :to="{ name: 'Sociéte' }">
+          <template #icon>
+            <document />
+          </template>
+        </sidenav-collapse>
+      </li>
+      <li class="nav-item" v-if="role == 'admin'">
         <sidenav-collapse navText="Historique" :to="{ name: 'Historique' }">
           <template #icon>
             <document />

@@ -12,11 +12,6 @@
               <th
                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
               >
-                ID
-              </th>
-              <th
-                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-              >
                 Nom
               </th>
               <th
@@ -35,9 +30,6 @@
           <tbody>
             <tr v-for="responsable in responsables" :key="responsable.UserId">
               <td class="align-middle text-center">
-                {{responsable.UserId}}
-              </td>
-              <td class="align-middle text-center">
                  {{responsable.nom}}
               </td>
               <td class="align-middle text-center">
@@ -55,8 +47,8 @@
   </div>
    <ModalC @close="toggleModal" :modalActive="modalActive">
       <div class="modal-content">
-        <h4>Ajouter responsable</h4>
-        <form role="form" @submit.prevent="login" class="text-start">
+        <h4>Ajouter agent</h4>
+        <form role="form" @submit.prevent="ajouter" class="text-start">
                     <label>Identifiant</label>
                     <input
                       id="identifiant"
@@ -66,14 +58,23 @@
                       name="identifiant"
                       v-model="identifiant"
                     />
-                    <label>Mot de passe</label>
+                    <label>Nom</label>
                     <input
-                      id="password"
-                      type="password"
-                      placeholder="Password"
+                      id="nom"
+                      type="string"
+                      placeholder="Nom"
                       class="form-control"
-                      name="motpasse"
-                      v-model="motpasse"
+                      name="nom"
+                      v-model="nom"
+                    />
+                    <label>Prénom</label>
+                    <input
+                      id="prenom"
+                      type="string"
+                      placeholder="Prénom"
+                      class="form-control"
+                      name="prenom"
+                      v-model="prenom"
                     />
                     <label>Mot de passe</label>
                     <input
@@ -84,59 +85,27 @@
                       name="motpasse"
                       v-model="motpasse"
                     />
-                    <label>Mot de passe</label>
+                    <label>CIN</label>
                     <input
-                      id="password"
-                      type="password"
-                      placeholder="Password"
+                      id="cin"
+                      type="number"
+                      placeholder="CIN"
                       class="form-control"
-                      name="motpasse"
-                      v-model="motpasse"
+                      name="cin"
+                      v-model="cin"
                     />
-                    <label>Mot de passe</label>
-                    <input
-                      id="password"
-                      type="password"
-                      placeholder="Password"
-                      class="form-control"
-                      name="motpasse"
-                      v-model="motpasse"
-                    />
-                    <label>Mot de passe</label>
-                    <input
-                      id="password"
-                      type="password"
-                      placeholder="Password"
-                      class="form-control"
-                      name="motpasse"
-                      v-model="motpasse"
-                    />
-                    <label>Mot de passe</label>
-                    <input
-                      id="password"
-                      type="password"
-                      placeholder="Password"
-                      class="form-control"
-                      name="motpasse"
-                      v-model="motpasse"
-                    />
-                    <label>Mot de passe</label>
-                    <input
-                      id="password"
-                      type="password"
-                      placeholder="Password"
-                      class="form-control"
-                      name="motpasse"
-                      v-model="motpasse"
-                    />
+                    <label>Sociéte</label>
+                    <select class="form-control" id="societech" name="societech" v-model="societech">
+                      <option v-for="societe in societes" :key="societe.id" v-bind:value="societe.id">{{ societe.nom }} </option>
+                    </select>
                     <div class="text-center">
-                      <button
+                      <vsud-button
                         class="btn btn-success mb-4"
                         variant="gradient"
                         color="success"
                         id="btn2"
-                        >Connexion
-                      </button>
+                        >Ajouter
+                      </vsud-button>
                     </div>
                   </form>
       </div>
@@ -153,6 +122,7 @@ import img6 from "../../assets/img/team-4.jpg";
 import axios from 'axios';
 import ModalC from "./ModalC.vue";
 import { ref } from "vue";
+import VsudButton from "@/components/VsudButton.vue";
 export default {
   name: "responsable",
   data() {
@@ -163,11 +133,19 @@ export default {
       img4,
       img5,
       img6,
-      responsables:null
+      responsables:null,
+      societes:null,
+      identifiant:'',
+      nom:'',
+      prenom:'',
+      motpasse:'',
+      cin:null,
+      societech:null
     };
   },
   components: {
-    ModalC
+    ModalC,
+    VsudButton
   },
   setup() {
     const modalActive = ref(false);
@@ -180,11 +158,27 @@ export default {
       axios.get('Responsable')
       .then(reponse=>{
          this.responsables = reponse.data;
-        console.log(this.responsables);
+      });
+      axios.get('Societe')
+      .then(reponse =>{
+        this.societes = reponse.data;
       })
   },
   methods:{
-
+ajouter(){
+      axios.post('User',{
+        identifiant:this.identifiant,
+        nom:this.nom,
+        prenom:this.prenom,
+        motpasse:this.motpasse,
+        role:"responsable",
+        CIN:this.cin,
+        societeId:this.societech
+      })
+      .then(reponse=>{
+        console.log(reponse)
+      })
+    }
   }
 };
 </script>

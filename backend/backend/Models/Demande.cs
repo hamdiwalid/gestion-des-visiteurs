@@ -9,8 +9,8 @@
         public int? UserId { get; set; }
         public virtual Societe? Societe { get; set; }
         public int? SocieteId { get; set; }
-
-
+        public string date { get; set; }
+        public string? etat { get; set; }
 
     }
 }

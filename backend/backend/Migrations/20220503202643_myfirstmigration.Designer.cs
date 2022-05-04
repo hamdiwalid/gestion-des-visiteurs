@@ -12,8 +12,8 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(backendContext))]
-    [Migration("20220427164237_MyFirstMigration")]
-    partial class MyFirstMigration
+    [Migration("20220503202643_myfirstmigration")]
+    partial class myfirstmigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,13 +32,19 @@ namespace backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
-                    b.Property<int?>("Societeid")
+                    b.Property<int?>("SocieteId")
                         .HasColumnType("int");
 
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("date")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("etat")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("motive")
@@ -46,7 +52,7 @@ namespace backend.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("Societeid");
+                    b.HasIndex("SocieteId");
 
                     b.HasIndex("UserId");
 
@@ -61,13 +67,13 @@ namespace backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
-                    b.Property<int?>("Demandeid")
+                    b.Property<int>("Demandeid")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Societeid")
+                    b.Property<int>("Societeid")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.Property<string>("etat")
@@ -120,7 +126,7 @@ namespace backend.Migrations
                     b.Property<string>("CIN")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Societeid")
+                    b.Property<int?>("SocieteId")
                         .HasColumnType("int");
 
                     b.Property<string>("identifiant")
@@ -140,8 +146,6 @@ namespace backend.Migrations
 
                     b.HasKey("UserId");
 
-                    b.HasIndex("Societeid");
-
                     b.ToTable("User");
                 });
 
@@ -149,7 +153,7 @@ namespace backend.Migrations
                 {
                     b.HasOne("backend.Models.Societe", "Societe")
                         .WithMany()
-                        .HasForeignKey("Societeid");
+                        .HasForeignKey("SocieteId");
 
                     b.HasOne("backend.Models.User", "User")
                         .WithMany()
@@ -164,30 +168,27 @@ namespace backend.Migrations
                 {
                     b.HasOne("backend.Models.Demande", "Demande")
                         .WithMany()
-                        .HasForeignKey("Demandeid");
+                        .HasForeignKey("Demandeid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("backend.Models.Societe", "Societe")
                         .WithMany()
-                        .HasForeignKey("Societeid");
+                        .HasForeignKey("Societeid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("backend.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Demande");
 
                     b.Navigation("Societe");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("backend.Models.User", b =>
-                {
-                    b.HasOne("backend.Models.Societe", "Societe")
-                        .WithMany()
-                        .HasForeignKey("Societeid");
-
-                    b.Navigation("Societe");
                 });
 #pragma warning restore 612, 618
         }

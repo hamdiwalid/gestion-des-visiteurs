@@ -12,6 +12,7 @@ import Historique from "../views/historique.vue";
 import DemandesAgent from "../views/demandeAgent.vue";
 import HistoriqueAgent from "../views/historiqueAgent.vue";
 import HistoriqueSociete from "../views/historiqueSociete.vue";
+import SocieteS from "../views/Societe.vue";
 
 const routes = [
   {
@@ -83,6 +84,11 @@ const routes = [
     path: "/historiqueSociete",
     name: "Historique sociéte",
     component: HistoriqueSociete,
+  },
+  {
+    path: "/societe",
+    name: "Sociéte",
+    component: SocieteS,
   },
   
 ];

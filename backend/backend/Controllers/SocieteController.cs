@@ -120,5 +120,30 @@ namespace backend.Controllers
             }
             return new JsonResult("Supprimer avec succès");
         }
+        [HttpGet("{id}")]
+        public JsonResult GetById(int id)
+        {
+            string query = @"
+                             Select * from dbo.[Societes]
+                             where id=@id
+                            ";
+            DataTable dt = new DataTable();
+            string sqlDataSource = _configuration.GetConnectionString("AppCon");
+            SqlDataReader sqlDataReader;
+            using (SqlConnection Con = new SqlConnection(sqlDataSource))
+            {
+                Con.Open();
+                using (SqlCommand cmd = new SqlCommand(query, Con))
+                {
+                    cmd.Parameters.AddWithValue("@id", id);
+                    sqlDataReader = cmd.ExecuteReader();
+                    dt.Load(sqlDataReader);
+                    sqlDataReader.Close();
+                    Con.Close();
+                }
+
+            }
+            return new JsonResult(dt);
+        }
     }
 }

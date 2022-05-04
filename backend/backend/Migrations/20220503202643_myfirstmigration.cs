@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace backend.Migrations
 {
-    public partial class MyFirstMigration : Migration
+    public partial class myfirstmigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -35,7 +36,7 @@ namespace backend.Migrations
                     motpasse = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     role = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CIN = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Societeid = table.Column<int>(type: "int", nullable: true)
+                    SocieteId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -51,14 +52,16 @@ namespace backend.Migrations
                     description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     motive = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<int>(type: "int", nullable: true),
-                    Societeid = table.Column<int>(type: "int", nullable: true)
+                    SocieteId = table.Column<int>(type: "int", nullable: true),
+                    date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    etat = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Demandes", x => x.id);
                     table.ForeignKey(
-                        name: "FK_Demandes_Societes_Societeid",
-                        column: x => x.Societeid,
+                        name: "FK_Demandes_Societes_SocieteId",
+                        column: x => x.SocieteId,
                         principalTable: "Societes",
                         principalColumn: "id");
                     table.ForeignKey(
@@ -76,9 +79,9 @@ namespace backend.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     etat = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     titre = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<int>(type: "int", nullable: true),
-                    Demandeid = table.Column<int>(type: "int", nullable: true),
-                    Societeid = table.Column<int>(type: "int", nullable: true)
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Demandeid = table.Column<int>(type: "int", nullable: false),
+                    Societeid = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -87,23 +90,26 @@ namespace backend.Migrations
                         name: "FK_Notifications_Demandes_Demandeid",
                         column: x => x.Demandeid,
                         principalTable: "Demandes",
-                        principalColumn: "id");
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Notifications_Societes_Societeid",
                         column: x => x.Societeid,
                         principalTable: "Societes",
-                        principalColumn: "id");
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Notifications_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
-                        principalColumn: "UserId");
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Demandes_Societeid",
+                name: "IX_Demandes_SocieteId",
                 table: "Demandes",
-                column: "Societeid");
+                column: "SocieteId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Demandes_UserId",
@@ -135,10 +141,10 @@ namespace backend.Migrations
                 name: "Demandes");
 
             migrationBuilder.DropTable(
-                name: "User");
+                name: "Societes");
 
             migrationBuilder.DropTable(
-                name: "Societes");
+                name: "User");
         }
     }
 }
