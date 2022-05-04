@@ -75,7 +75,7 @@ namespace backend.Controllers
         {
             string query = @"
                              Update dbo.[Demandes]
-                             set description=@description,motive=@motive,user_id=@user_id,societe_id=@societe_id
+                             set etat=@etat
                              where id = @id
                             ";
             DataTable dt = new DataTable();
@@ -86,11 +86,8 @@ namespace backend.Controllers
                 Con.Open();
                 using (SqlCommand cmd = new SqlCommand(query, Con))
                 {
-                    cmd.Parameters.AddWithValue("@id", demande.id);
-                    cmd.Parameters.AddWithValue("@description", demande.description);
-                    cmd.Parameters.AddWithValue("@motive", demande.motive);
-                    cmd.Parameters.AddWithValue("@user_id", demande.User);
-                    cmd.Parameters.AddWithValue("@societe_id", demande.Societe);
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@etat", demande.etat);
                     sqlDataReader = cmd.ExecuteReader();
                     dt.Load(sqlDataReader);
                     sqlDataReader.Close();
@@ -100,6 +97,7 @@ namespace backend.Controllers
             }
             return new JsonResult("Modifier avec succès");
         }
+
         [HttpDelete]
         public JsonResult Delete(int id)
         {

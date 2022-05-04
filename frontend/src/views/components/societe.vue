@@ -24,7 +24,9 @@
               >
                 Matricule
               </th>
-              <th class="text-secondary opacity-7"></th>
+              <th
+                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+              >Action</th>
             </tr>
           </thead>
           <tbody>
@@ -38,7 +40,20 @@
               <td class="align-middle text-center">
                 {{societe.matricule}}
               </td>
-              <td class="align-middle text-center"></td>
+              <td class="align-middle text-center">
+                <div class="ms-auto text-end">
+            <a @click="sup(societe.id)"
+              class="btn btn-link text-danger text-gradient px-3 mb-0"
+              href="javascript:;"
+            >
+              <i class="far fa-trash-alt me-2" aria-hidden="true"></i>Supprimer
+            </a>
+            <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;">
+              <i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i
+              >Modifier
+            </a>
+          </div>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -47,8 +62,8 @@
   </div>
    <ModalC @close="toggleModal" :modalActive="modalActive">
       <div class="modal-content">
-        <h4>Ajouter responsable</h4>
-        <form role="form" @submit.prevent="ajouter" class="text-start">
+        <h4>Ajouter sociéte</h4>
+        <form role="form" @submit.stop.prevent="ajouter" class="text-start">
                     <label>Nom</label>
                     <input
                       id="nom"
@@ -141,6 +156,21 @@ export default {
         matricule:this.matricule
       })
       .then(reponse=>{
+        axios.get('Societe')
+      .then(reponse=>{
+         this.societes = reponse.data;
+      })
+        console.log(reponse)
+        location.reload()
+      })
+    },
+    sup(id){
+      axios.delete(`Societe?id=${id}`)
+      .then(reponse=>{
+        axios.get('Societe')
+      .then(reponse=>{
+         this.societes = reponse.data;
+      })
         console.log(reponse)
       })
     }
@@ -157,7 +187,5 @@ export default {
 .modal-content {
     border: 0px !important;
 }
-.modal-inner {
-    top: 141px !important;
-}
+
 </style>

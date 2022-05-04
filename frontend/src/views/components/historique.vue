@@ -11,6 +11,11 @@
               <th
                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
               >
+                ID
+              </th>
+              <th
+                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+              >
                 Motivé
               </th>
               <th
@@ -34,6 +39,9 @@
           <tbody>
             <tr v-for="demande in demandes" :key="demande.id">
               <td class="align-middle text-center">
+                 {{demande.id}}
+              </td>
+              <td class="align-middle text-center">
                  {{demande.motive}}
               </td>
               <td class="align-middle text-center">
@@ -48,7 +56,7 @@
               </td>
               <td class="align-middle text-center">
                <div v-for="societe in societes" :key="societe.id">
-                  <div v-if="societe.id == demande.Societeid">
+                  <div v-if="societe.id == demande.SocieteId">
                     {{ societe.nom }} 
                   </div>
                   </div>
@@ -91,7 +99,6 @@ export default {
       axios.get('Demande')
       .then(reponse=>{
          this.demandes = reponse.data;
-        console.log(this.demandes);
       });
       axios.get('User')
       .then(reponse=>{

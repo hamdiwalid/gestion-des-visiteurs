@@ -12,6 +12,11 @@
               <th
                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
               >
+                ID
+              </th>
+              <th
+                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+              >
                 Motivé
               </th>
               <th
@@ -29,7 +34,7 @@
               >
                 Sociéte
               </th>
-              <th class="text-secondary opacity-7"></th>
+              <th  class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -53,12 +58,27 @@
               </td>
               <td class="align-middle text-center">
                <div v-for="societe in societes" :key="societe.id">
-                  <div v-if="societe.id == demande.Societeid">
+                  <div v-if="societe.id == demande.SocieteId">
                     {{ societe.nom }} 
                   </div>
                   </div>
               </td>
-              <td></td>
+              <td>
+                <div class="ms-auto text-end">
+                <a @click="accepte(demande.id)"
+              class="btn btn-link text-success text-gradient px-3 mb-0"
+              href="javascript:;"
+            >
+              Présent
+            </a>
+            <a @click="refuse(demande.id)"
+              class="btn btn-link text-danger text-gradient px-3 mb-0"
+              href="javascript:;"
+            >
+              Absent
+            </a>
+                </div>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -173,8 +193,38 @@ export default {
         etat:'nonpresent',
       })
       .then(reponse=>{
+        axios.get('Demande')
+      .then(reponse=>{
+         this.demandes = reponse.data;
+      });
         console.log(reponse)
       })
+    },
+    accepte(id){
+      axios.put(`Demande?id=${id}`,{
+        etat:"present"
+      })
+      .then(reponse=>{
+        axios.get('Demande')
+      .then(reponse=>{
+         this.demandes = reponse.data;
+      });
+        console.log(reponse)
+        location.reload()
+      })
+    },
+    refuse(id){
+      axios.put(`Demande?id=${id}`,{
+        etat:"absent"
+      })
+      .then(reponse=>{
+        axios.get('Demande')
+      .then(reponse=>{
+         this.demandes = reponse.data;
+      });
+        console.log(reponse)
+      })
+
     }
   }
 };
@@ -188,8 +238,5 @@ export default {
 }
 .modal-content {
     border: 0px !important;
-}
-.modal-inner {
-    top: 0 !important;
 }
 </style>

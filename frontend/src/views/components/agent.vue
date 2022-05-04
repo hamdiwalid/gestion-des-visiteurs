@@ -24,7 +24,9 @@
               >
                 CIN
               </th>
-              <th class="text-secondary opacity-7"></th>
+              <th
+                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+              >Action</th>
             </tr>
           </thead>
           <tbody>
@@ -38,7 +40,19 @@
               <td class="align-middle text-center">
                 {{agent.CIN}}
               </td>
-              <td class="align-middle text-center"></td>
+              <td class="align-middle text-center">
+                <div class="ms-auto text-end">
+            <a @click="sup(agent.UserId)"
+              class="btn btn-link text-danger text-gradient px-3 mb-0"
+            >
+              <i class="far fa-trash-alt me-2" aria-hidden="true"></i>Supprimer
+            </a>
+            <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;">
+              <i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i
+              >Modifier
+            </a>
+          </div>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -167,6 +181,21 @@ ajouter(){
         societeId:0
       })
       .then(reponse=>{
+        axios.get('Agent')
+      .then(reponse=>{
+         this.agents = reponse.data;
+      })
+        console.log(reponse)
+        location.reload()
+      })
+    },
+    sup(id){
+      axios.delete(`User?id=${id}`)
+      .then(reponse=>{
+        axios.get('Agent')
+      .then(reponse=>{
+         this.agents = reponse.data;
+      })
         console.log(reponse)
       })
     }
@@ -182,9 +211,6 @@ ajouter(){
 }
 .modal-content {
     border: 0px !important;
-}
-.modal-inner {
-    top: 141px !important;
 }
 /* Firefox */
 input[type=number] {

@@ -30,7 +30,7 @@
               >
                 Sociéte
               </th>
-              <th class="text-secondary opacity-7"></th>
+              <th  class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -50,12 +50,27 @@
               </td>
               <td class="align-middle text-center">
                <div v-for="societe in societes" :key="societe.id">
-                  <div v-if="societe.id == demande.Societeid">
+                  <div v-if="societe.id == demande.SocieteId">
                     {{ societe.nom }} 
                   </div>
                   </div>
               </td>
-              <td></td>
+              <td>
+                <div class="ms-auto text-end">
+                <a
+              class="btn btn-link text-success text-gradient px-3 mb-0"
+              href="javascript:;"
+            >
+              Présent
+            </a>
+            <a
+              class="btn btn-link text-danger text-gradient px-3 mb-0"
+              href="javascript:;"
+            >
+              Absent
+            </a>
+                </div>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -164,7 +179,13 @@ export default {
         etat:'nonpresent',
       })
       .then(reponse=>{
+        axios.get('Demande')
+      .then(reponse=>{
+         this.demandes = reponse.data;
+        console.log(this.demandes);
+      });
         console.log(reponse)
+        location.reload()
       })
     }
   }
