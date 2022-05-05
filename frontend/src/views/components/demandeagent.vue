@@ -57,7 +57,7 @@
               <td class="align-middle text-center">
                 <div v-for="user in users" :key="user.UserId">
                   <div v-if="user.UserId == demande.UserId">
-                    {{ user.nom }} 
+                    {{ user.nom }} {{ user.prenom }} 
                   </div>
                   </div>
               </td>
@@ -139,6 +139,7 @@ import img6 from "../../assets/img/team-4.jpg";
 import axios from 'axios';
 import ModalC from "./ModalC.vue";
 import { ref } from "vue";
+import VsudButton from "@/components/VsudButton.vue";
 export default {
   name: "demandeagent",
   data() {
@@ -159,7 +160,8 @@ export default {
     };
   },
   components: {
-    ModalC
+    ModalC,
+    VsudButton
   },
   setup() {
     const modalActive = ref(false);

@@ -50,7 +50,7 @@
               <td class="align-middle text-center">
                 <div v-for="user in users" :key="user.UserId">
                   <div v-if="user.UserId == demande.UserId">
-                    {{ user.nom }} 
+                    {{ user.nom }} {{ user.prenom }} 
                   </div>
                   </div>
               </td>
@@ -61,7 +61,20 @@
                   </div>
                   </div>
               </td>
-              <td></td>
+              <td>
+                <div class="ms-auto text-end">
+                <span v-if="demande.etat == 'present'"
+              class=" text-success text-gradient px-3 mb-0"
+            >
+              Présent
+            </span>
+            <span v-if="demande.etat == 'absent'"
+              class="text-danger text-gradient px-3 mb-0"
+            >
+              Absent
+            </span>
+                </div>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -96,7 +109,9 @@ export default {
   components: {
   },
   async created(){
-      axios.get('Demande')
+    this.user = localStorage.getItem("currentUser");
+   var id = this.user[this.user.length-2]
+      axios.get(`Demande/hsociete?=${id}`)
       .then(reponse=>{
          this.demandes = reponse.data;
       });

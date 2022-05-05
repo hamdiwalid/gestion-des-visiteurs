@@ -30,7 +30,7 @@
               >
                 Sociéte
               </th>
-              <th  class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
+              <th  class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"></th>
             </tr>
           </thead>
           <tbody>
@@ -44,7 +44,7 @@
               <td class="align-middle text-center">
                 <div v-for="user in users" :key="user.UserId">
                   <div v-if="user.UserId == demande.UserId">
-                    {{ user.nom }} 
+                    {{ user.nom }} {{ user.prenom }} 
                   </div>
                   </div>
               </td>
@@ -56,20 +56,7 @@
                   </div>
               </td>
               <td>
-                <div class="ms-auto text-end">
-                <a
-              class="btn btn-link text-success text-gradient px-3 mb-0"
-              href="javascript:;"
-            >
-              Présent
-            </a>
-            <a
-              class="btn btn-link text-danger text-gradient px-3 mb-0"
-              href="javascript:;"
-            >
-              Absent
-            </a>
-                </div>
+
               </td>
             </tr>
           </tbody>
@@ -122,6 +109,7 @@ import img6 from "../../assets/img/team-4.jpg";
 import axios from 'axios';
 import ModalC from "./ModalC.vue";
 import { ref } from "vue";
+import VsudButton from "@/components/VsudButton.vue";
 export default {
   name: "demandesociete",
   data() {
@@ -142,7 +130,8 @@ export default {
     };
   },
   components: {
-    ModalC
+    ModalC,
+    VsudButton
   },
   setup() {
     const modalActive = ref(false);
@@ -152,7 +141,9 @@ export default {
     return { modalActive, toggleModal };
   },
   async created(){
-      axios.get('Demande')
+    this.user = localStorage.getItem("currentUser");
+   var id = this.user[this.user.length-2]
+      axios.get(`Demande/dsociete?id=${id}`)
       .then(reponse=>{
          this.demandes = reponse.data;
         console.log(this.demandes);
@@ -170,16 +161,17 @@ export default {
   },
   methods:{
    ajouter(){
+     var id = this.user[this.user.length-2]
       axios.post('Demande',{
         description:this.description,
         motive:this.motive,
         userId:this.user[10],
-        societeId:this.user[this.user.length-2],
+        societeId:id ,
         date:this.date,
         etat:'nonpresent',
       })
       .then(reponse=>{
-        axios.get('Demande')
+        axios.get(`Demande/dsociete?id=${id}`)
       .then(reponse=>{
          this.demandes = reponse.data;
         console.log(this.demandes);

@@ -35,6 +35,8 @@
                 Sociéte
               </th>
               <th  class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
+                            <th  class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
+
             </tr>
           </thead>
           <tbody>
@@ -51,7 +53,7 @@
               <td class="align-middle text-center">
                 <div v-for="user in users" :key="user.UserId">
                   <div v-if="user.UserId == demande.UserId">
-                    {{ user.nom }} 
+                    {{ user.nom }} {{ user.prenom }} 
                   </div>
                   </div>
                 
@@ -62,6 +64,9 @@
                     {{ societe.nom }} 
                   </div>
                   </div>
+              </td>
+              <td class="align-middle text-center">
+                    {{ demande.etat }} 
               </td>
               <td>
                 <div class="ms-auto text-end">
@@ -198,6 +203,7 @@ export default {
          this.demandes = reponse.data;
       });
         console.log(reponse)
+        location.reload()
       })
     },
     accepte(id){
@@ -210,7 +216,6 @@ export default {
          this.demandes = reponse.data;
       });
         console.log(reponse)
-        location.reload()
       })
     },
     refuse(id){

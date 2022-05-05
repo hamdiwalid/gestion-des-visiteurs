@@ -19,7 +19,7 @@ namespace backend.Controllers
             string query = @"
                              Select * from 
                             dbo.[Demandes]
-                           
+                           where etat='nonpresent'
                             ";
             DataTable dt = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("AppCon");
@@ -129,6 +129,87 @@ namespace backend.Controllers
             string query = @"
                              Select * from dbo.[Demandes]
                              where id=@id
+                            ";
+            DataTable dt = new DataTable();
+            string sqlDataSource = _configuration.GetConnectionString("AppCon");
+            SqlDataReader sqlDataReader;
+            using (SqlConnection Con = new SqlConnection(sqlDataSource))
+            {
+                Con.Open();
+                using (SqlCommand cmd = new SqlCommand(query, Con))
+                {
+                    cmd.Parameters.AddWithValue("@id", id);
+                    sqlDataReader = cmd.ExecuteReader();
+                    dt.Load(sqlDataReader);
+                    sqlDataReader.Close();
+                    Con.Close();
+                }
+
+            }
+            return new JsonResult(dt);
+        }
+        [HttpGet]
+        [Route("historique")]
+        public JsonResult GetAll()
+        {
+            string query = @"
+                             Select * from 
+                            dbo.[Demandes]
+                           where etat='absent' or etat='present'
+                            ";
+            DataTable dt = new DataTable();
+            string sqlDataSource = _configuration.GetConnectionString("AppCon");
+            SqlDataReader sqlDataReader;
+            using (SqlConnection Con = new SqlConnection(sqlDataSource))
+            {
+                Con.Open();
+                using (SqlCommand cmd = new SqlCommand(query, Con))
+                {
+                    //cmd.Parameters.AddWithValue("@datenew", new DateTime());
+                    sqlDataReader = cmd.ExecuteReader();
+                    dt.Load(sqlDataReader);
+                    sqlDataReader.Close();
+                    Con.Close();
+                }
+
+            }
+            return new JsonResult(dt);
+        }
+        [HttpGet]
+        [Route("hsociete")]
+        public JsonResult GetAllS(int id)
+        {
+            string query = @"
+                             Select * from 
+                            dbo.[Demandes]
+                           where SocieteId=@id and etat='absent' or etat='present'
+                            ";
+            DataTable dt = new DataTable();
+            string sqlDataSource = _configuration.GetConnectionString("AppCon");
+            SqlDataReader sqlDataReader;
+            using (SqlConnection Con = new SqlConnection(sqlDataSource))
+            {
+                Con.Open();
+                using (SqlCommand cmd = new SqlCommand(query, Con))
+                {
+                    cmd.Parameters.AddWithValue("@id", id);
+                    sqlDataReader = cmd.ExecuteReader();
+                    dt.Load(sqlDataReader);
+                    sqlDataReader.Close();
+                    Con.Close();
+                }
+
+            }
+            return new JsonResult(dt);
+        }
+        [HttpGet]
+        [Route("dsociete")]
+        public JsonResult GetAllDS(int id)
+        {
+            string query = @"
+                             Select * from 
+                            dbo.[Demandes]
+                           where SocieteId=@id and etat='nonpresent'
                             ";
             DataTable dt = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("AppCon");
