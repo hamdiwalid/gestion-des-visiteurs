@@ -99,6 +99,12 @@
                         >Ajouter
                       </vsud-button>
                     </div>
+                    <p id="p" v-if="errors.length">
+                        <b>Veuillez corriger les erreurs suivantes:</b>
+                        <ul>
+                        <li v-for="error in errors " :key="error">{{ error }}</li>
+                        </ul>
+                    </p>
                   </form>
       </div>
     </ModalC>
@@ -128,7 +134,8 @@ export default {
       societes:null,
       nom:'',
       description:'',
-      matricule:''
+      matricule:'',
+      errors: [],
     };
   },
   components: {
@@ -149,7 +156,8 @@ export default {
       })
   },
   methods:{
-    ajouter(){
+    ajouter: function (e) {
+      if (this.nom && this.matricule) {
       axios.post('Societe',{
         nom:this.nom,
         description:this.description,
@@ -163,6 +171,17 @@ export default {
         console.log(reponse)
         location.reload()
       })
+      }
+      this.errors = [];
+
+      if (!this.nom) {
+        this.errors.push('Nom est obligatoire.');
+      }
+      if (!this.matricule) {
+        this.errors.push('Matricule est obligatoire.');
+      }
+
+      e.preventDefault();
     },
     sup(id){
       axios.delete(`Societe?id=${id}`)

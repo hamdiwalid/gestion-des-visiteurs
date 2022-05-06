@@ -24,7 +24,7 @@
                   <p class="mb-0">Entrez votre identifiant et votre mot de passe pour ouvrir une session</p>
                 </div>
                 <div class="card-body">
-                  <form role="form" @submit.prevent="login" class="text-start">
+                  <form role="form" @submit.prevent="checkForm" class="text-start">
                     <label>Identifiant</label>
                     <input
                       id="identifiant"
@@ -38,7 +38,7 @@
                     <input
                       id="password"
                       type="password"
-                      placeholder="Password"
+                      placeholder="Mot de passe"
                       class="form-control"
                       name="motpasse"
                       v-model="motpasse"
@@ -52,6 +52,12 @@
                         >Connexion
                       </vsud-button>
                     </div>
+                    <p id="p" v-if="errors.length">
+                        <b>Veuillez corriger les erreurs suivantes:</b>
+                        <ul>
+                        <li v-for="error in errors " :key="error">{{ error }}</li>
+                        </ul>
+                    </p>
                   </form>
                 </div>
               </div>
@@ -91,7 +97,8 @@ export default {
   data(){
     return{
       identifiant:'',
-      motpasse: ''
+      motpasse: '',
+      errors: [],
     }
       
   },
@@ -111,7 +118,9 @@ export default {
   },
   methods: {
     ...mapMutations(["toggleEveryDisplay", "toggleHideConfig"]),
-     login(){
+
+    checkForm: function (e) {
+      if (this.identifiant && this.motpasse) {
         axios.post('login',{
         identifiant:this.identifiant,
         motpasse: this.motpasse
@@ -129,8 +138,24 @@ export default {
            this.$router.push({ path: '/demandeAgent' })
          }
       })
-      
+      }
+
+      this.errors = [];
+
+      if (!this.identifiant) {
+        this.errors.push('Identifiant est obligatoire.');
+      }
+      if (!this.motpasse) {
+        this.errors.push('Mot de passe est obligatoire.');
+      }
+
+      e.preventDefault();
     }
   },
 };
 </script>
+<style>
+#p{
+  color: red;
+}
+</style>

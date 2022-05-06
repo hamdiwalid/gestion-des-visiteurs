@@ -118,6 +118,12 @@
                         >Ajouter
                       </vsud-button>
                     </div>
+                    <p id="p" v-if="errors.length">
+                        <b>Veuillez corriger les erreurs suivantes:</b>
+                        <ul>
+                        <li v-for="error in errors " :key="error">{{ error }}</li>
+                        </ul>
+                    </p>
                   </form>
       </div>
     </ModalC>
@@ -149,7 +155,8 @@ export default {
       nom:'',
       prenom:'',
       motpasse:'',
-      cin:null
+      cin:null,
+      errors: [],
     };
   },
   components: {
@@ -170,7 +177,8 @@ export default {
       })
   },
   methods:{
-ajouter(){
+ajouter: function(e){
+  if (this.identifiant && this.nom && this.prenom && this.motpasse && this.cin) {
       axios.post('User',{
         identifiant:this.identifiant,
         nom:this.nom,
@@ -188,6 +196,26 @@ ajouter(){
         console.log(reponse)
         location.reload()
       })
+  }
+  this.errors = [];
+
+      if (!this.identifiant) {
+        this.errors.push('Identifiant est obligatoire.');
+      }
+      if (!this.nom) {
+        this.errors.push('Nom est obligatoire.');
+      }
+      if (!this.prenom) {
+        this.errors.push('Prenom est obligatoire.');
+      }
+      if (!this.motpasse) {
+        this.errors.push('Mot de passe est obligatoire.');
+      }
+      if (!this.cin) {
+        this.errors.push('CIN est obligatoire.');
+      }
+
+      e.preventDefault();
     },
     sup(id){
       axios.delete(`User?id=${id}`)

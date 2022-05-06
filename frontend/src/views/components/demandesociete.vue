@@ -94,6 +94,12 @@
                         >Ajouter
                       </vsud-button>
                     </div>
+                    <p id="p" v-if="errors.length">
+                        <b>Veuillez corriger les erreurs suivantes:</b>
+                        <ul>
+                        <li v-for="error in errors " :key="error">{{ error }}</li>
+                        </ul>
+                    </p>
                   </form>
       </div>
     </ModalC>
@@ -126,7 +132,8 @@ export default {
       motive:'',
       description:'',
       societech:null,
-      date: new Date()
+      date: new Date(),
+      errors: [],
     };
   },
   components: {
@@ -160,7 +167,8 @@ export default {
       
   },
   methods:{
-   ajouter(){
+   ajouter: function (e) {
+      if (this.motive) {
      var id = this.user[this.user.length-2]
       axios.post('Demande',{
         description:this.description,
@@ -179,6 +187,14 @@ export default {
         console.log(reponse)
         location.reload()
       })
+      }
+      this.errors = [];
+
+      if (!this.motive) {
+        this.errors.push('Motivé est obligatoire.');
+      }
+
+      e.preventDefault();
     }
   }
 };

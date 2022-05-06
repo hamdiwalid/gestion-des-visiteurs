@@ -124,6 +124,12 @@
                         >Ajouter
                       </vsud-button>
                     </div>
+                    <p id="p" v-if="errors.length">
+                        <b>Veuillez corriger les erreurs suivantes:</b>
+                        <ul>
+                        <li v-for="error in errors " :key="error">{{ error }}</li>
+                        </ul>
+                    </p>
                   </form>
       </div>
     </ModalC>
@@ -156,7 +162,8 @@ export default {
       motive:'',
       description:'',
       societech:null,
-      date: new Date()
+      date: new Date(),
+      errors: [],
     };
   },
   components: {
@@ -187,7 +194,8 @@ export default {
        this.user = localStorage.getItem("currentUser");
   },
   methods:{
-    ajouter(){
+    ajouter: function (e) {
+      if (this.motive && this.societech) {
       axios.post('Demande',{
         description:this.description,
         motive:this.motive,
@@ -203,7 +211,19 @@ export default {
         console.log(this.demandes);
       });
         console.log(reponse)
+         location.reload()
       })
+      }
+      this.errors = [];
+
+      if (!this.motive) {
+        this.errors.push('Motivé est obligatoire.');
+      }
+      if (!this.societech) {
+        this.errors.push('Sociéte est obligatoire.');
+      }
+
+      e.preventDefault();
     },
     accepte(id){
       axios.put(`Demande?id=${id}`,{

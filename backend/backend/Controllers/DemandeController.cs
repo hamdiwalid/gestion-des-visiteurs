@@ -68,7 +68,7 @@ namespace backend.Controllers
                 }
 
             }
-            return new JsonResult("Ajoute avec succès");
+            return new JsonResult(dt);
         }
         [HttpPut]
         public JsonResult Put(Demande demande, int id)
@@ -95,7 +95,7 @@ namespace backend.Controllers
                 }
 
             }
-            return new JsonResult("Modifier avec succès");
+            return new JsonResult(dt);
         }
 
         [HttpDelete]
