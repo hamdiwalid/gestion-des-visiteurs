@@ -80,18 +80,11 @@ namespace backend.Migrations
                     etat = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     titre = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    Demandeid = table.Column<int>(type: "int", nullable: false),
                     Societeid = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Notifications", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_Notifications_Demandes_Demandeid",
-                        column: x => x.Demandeid,
-                        principalTable: "Demandes",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Notifications_Societes_Societeid",
                         column: x => x.Societeid,
@@ -117,11 +110,6 @@ namespace backend.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Notifications_Demandeid",
-                table: "Notifications",
-                column: "Demandeid");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Notifications_Societeid",
                 table: "Notifications",
                 column: "Societeid");
@@ -135,10 +123,10 @@ namespace backend.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Notifications");
+                name: "Demandes");
 
             migrationBuilder.DropTable(
-                name: "Demandes");
+                name: "Notifications");
 
             migrationBuilder.DropTable(
                 name: "Societes");

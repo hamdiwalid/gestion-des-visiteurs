@@ -126,6 +126,7 @@ export default {
         motpasse: this.motpasse
       }
       ).then(reponse =>{
+        console.log(reponse)
         localStorage.setItem("currentUser",JSON.stringify(reponse.data[0]))
         localStorage.setItem("role", reponse.data[0].role)
          if(reponse.data[0].role == "admin"){

@@ -65,9 +65,6 @@ namespace backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
-                    b.Property<int>("Demandeid")
-                        .HasColumnType("int");
-
                     b.Property<int>("Societeid")
                         .HasColumnType("int");
 
@@ -81,8 +78,6 @@ namespace backend.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
-
-                    b.HasIndex("Demandeid");
 
                     b.HasIndex("Societeid");
 
@@ -164,12 +159,6 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.Notification", b =>
                 {
-                    b.HasOne("backend.Models.Demande", "Demande")
-                        .WithMany()
-                        .HasForeignKey("Demandeid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("backend.Models.Societe", "Societe")
                         .WithMany()
                         .HasForeignKey("Societeid")
@@ -181,8 +170,6 @@ namespace backend.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Demande");
 
                     b.Navigation("Societe");
 

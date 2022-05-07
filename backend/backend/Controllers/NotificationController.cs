@@ -14,11 +14,12 @@ namespace backend.Controllers
             _configuration = configuration;
         }
         [HttpGet]
-        public JsonResult Get()
+        public JsonResult Get(int id)
         {
             string query = @"
                              Select * from 
                             dbo.[Notifications]
+                            where UserId != @id and etat='nonlu'
                             ";
             DataTable dt = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("AppCon");
@@ -28,6 +29,7 @@ namespace backend.Controllers
                 Con.Open();
                 using (SqlCommand cmd = new SqlCommand(query, Con))
                 {
+                    cmd.Parameters.AddWithValue("@id",id);
                     sqlDataReader = cmd.ExecuteReader();
                     dt.Load(sqlDataReader);
                     sqlDataReader.Close();
@@ -42,7 +44,7 @@ namespace backend.Controllers
         {
             string query = @"
                              Insert into dbo.[Notifications]
-                             values(@etat,@titre,@user_id,@demande_id,@societe_id)
+                             values(@etat,@titre,@user_id,@societe_id)
                             ";
             DataTable dt = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("AppCon");
@@ -55,7 +57,6 @@ namespace backend.Controllers
                     cmd.Parameters.AddWithValue("@etat", notification.etat);
                     cmd.Parameters.AddWithValue("@titre", notification.titre);
                     cmd.Parameters.AddWithValue("@user_id", notification.UserId);
-                    cmd.Parameters.AddWithValue("@demande_id", notification.Demandeid);
                     cmd.Parameters.AddWithValue("@societe_id", notification.Societeid);
 
                     sqlDataReader = cmd.ExecuteReader();
@@ -72,7 +73,7 @@ namespace backend.Controllers
         {
             string query = @"
                              Update dbo.[Notifications]
-                             set etat=@etat,titre=@titre,user_id=@user_id,demande_id=@demande_id,societe_id=@societe_id
+                             set etat=@etat
                              where id = @id
                             ";
             DataTable dt = new DataTable();
@@ -83,12 +84,8 @@ namespace backend.Controllers
                 Con.Open();
                 using (SqlCommand cmd = new SqlCommand(query, Con))
                 {
-                    cmd.Parameters.AddWithValue("@id", notification.id);
+                    cmd.Parameters.AddWithValue("@id", id);
                     cmd.Parameters.AddWithValue("@etat", notification.etat);
-                    cmd.Parameters.AddWithValue("@titre", notification.titre);
-                    cmd.Parameters.AddWithValue("@user_id", notification.User);
-                    cmd.Parameters.AddWithValue("@demande_id", notification.Demande);
-                    cmd.Parameters.AddWithValue("@societe_id", notification.Societe);
                     sqlDataReader = cmd.ExecuteReader();
                     dt.Load(sqlDataReader);
                     sqlDataReader.Close();
@@ -125,12 +122,12 @@ namespace backend.Controllers
         }
         [HttpGet]
         [Route("societe")]
-        public JsonResult GetS(int id)
+        public JsonResult GetS(int id, int id1)
         {
             string query = @"
                              Select * from 
                             dbo.[Notifications]
-                            where Societeid=@id and etat='nonlu'
+                            where Societeid=@id and etat='nonlu' and UserId != @id1
                             ";
             DataTable dt = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("AppCon");
@@ -141,6 +138,7 @@ namespace backend.Controllers
                 using (SqlCommand cmd = new SqlCommand(query, Con))
                 {
                     cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@id1", id1);
                     sqlDataReader = cmd.ExecuteReader();
                     dt.Load(sqlDataReader);
                     sqlDataReader.Close();

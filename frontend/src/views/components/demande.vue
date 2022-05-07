@@ -206,6 +206,15 @@ export default {
         etat:'nonpresent',
       })
       .then(reponse=>{
+        axios.post('Notification',{
+          etat: "nonlu",
+          titre: "Nouvelle demande",
+          userId: this.user[10],
+          societeid: this.societech
+        })
+        .then(reponse=>{
+          console.log(reponse)
+        })
         axios.get('Demande')
       .then(reponse=>{
          this.demandes = reponse.data;
@@ -230,6 +239,15 @@ export default {
         etat:"present"
       })
       .then(reponse=>{
+        axios.post('Notification',{
+          etat: "nonlu",
+          titre: "Demande acceptée",
+          userId: this.user[10],
+          societeid: this.societech
+        })
+        .then(reponse=>{
+          console.log(reponse)
+        })
         axios.get('Demande')
       .then(reponse=>{
          this.demandes = reponse.data;
@@ -242,6 +260,15 @@ export default {
         etat:"absent"
       })
       .then(reponse=>{
+        axios.post('Notification',{
+          etat: "nonlu",
+          titre: "Demande refusée",
+          userId: this.user[10],
+          societeid: this.societech
+        })
+        .then(reponse=>{
+          console.log(reponse)
+        })
         axios.get('Demande')
       .then(reponse=>{
          this.demandes = reponse.data;

@@ -65,8 +65,8 @@
               @click="showMenu = !showMenu"
             >
               <i class="cursor-pointer fa fa-bell"></i>
-              <span v-if="Notification.length && role=='responsable' || role=='assistant'" class="notification">{{Notification.length}}</span>
-              <span v-if="Notifications.length && role=='admin' || role=='agent'" class="notification">{{Notification.length}}</span>
+              <span v-if="Notification.length != 0 && role=='responsable' || Notifications.length != 0 && role=='assistant'" class="notification">{{Notification.length}}</span>
+              <span v-if="Notifications.length != 0 && role=='admin' || Notifications.length != 0 && role=='agent'" class="notification">{{Notifications.length}}</span>
             </a>
             <ul v-if="role=='responsable' || role=='assistant'"
               class="px-2 py-3 dropdown-menu dropdown-menu-end me-sm-n4"
@@ -74,7 +74,7 @@
               aria-labelledby="dropdownMenuButton"
             >
               <li  class="mb-2" v-for="notif in Notification" :key="notif.id">
-                <a class="dropdown-item border-radius-md" href="javascript:;">
+                <a @click="lire(notif.id)" class="dropdown-item border-radius-md" href="javascript:;">
                   <div class="py-1 d-flex">
                     <div class="my-auto">
                       <img
@@ -86,7 +86,11 @@
                     <div class="d-flex flex-column justify-content-center">
                       <h6 class="mb-1 text-sm font-weight-normal">
                         <span class="font-weight-bold">{{notif.titre}}</span> de
-                        Laur
+                        <div v-for="user in users" :key="user.UserId">
+                        <div v-if="user.UserId == notif.UserId">
+                          {{ user.nom }} {{ user.prenom }}
+                        </div>
+                        </div>
                       </h6>
                       <!--p class="mb-0 text-xs text-secondary">
                         <i class="fa fa-clock me-1"></i>
@@ -103,7 +107,7 @@
               aria-labelledby="dropdownMenuButton"
             >
               <li  class="mb-2" v-for="notifs in Notifications" :key="notifs.id">
-                <a class="dropdown-item border-radius-md" href="javascript:;">
+                <a @click="lire(notifs.id)" class="dropdown-item border-radius-md" href="javascript:;">
                   <div class="py-1 d-flex">
                     <div class="my-auto">
                       <img
@@ -115,7 +119,11 @@
                     <div class="d-flex flex-column justify-content-center">
                       <h6 class="mb-1 text-sm font-weight-normal">
                         <span class="font-weight-bold">{{notifs.titre}}</span> de
-                        Laur
+                        <div v-for="user in users" :key="user.UserId">
+                        <div v-if="user.UserId == notifs.UserId">
+                          {{ user.nom }} {{ user.prenom }}
+                        </div>
+                        </div>
                       </h6>
                       <!--p class="mb-0 text-xs text-secondary">
                         <i class="fa fa-clock me-1"></i>
@@ -142,22 +150,29 @@ export default {
     return {
       showMenu: false,
       Notification:[],
-      Notifications:[]
+      Notifications:[],
+      users:[]
     };
   },
   props: ["minNav", "textWhite"],
   created() {
     this.minNav;
     this.user = localStorage.getItem("currentUser");
+    this.userid = this.user[10];
     this.role = localStorage.getItem("role");
     var id = this.user[this.user.length-2];
-    axios.get(`Notification/societe?id=${id}`)
+    axios.get(`Notification/societe?id=${id}&id1=${this.userid}`)
       .then(reponse=>{
          this.Notification = reponse.data;
+         this.length = this.Notification.length
       });
-      axios.get(`Notification`)
+      axios.get(`Notification?id=${this.userid}`)
       .then(reponse=>{
          this.Notifications = reponse.data;
+      });
+      axios.get(`User`)
+      .then(reponse=>{
+         this.users = reponse.data;
       });
   },
   methods: {
@@ -171,6 +186,24 @@ export default {
     logout() {
     localStorage.removeItem('currentUser');
     localStorage.removeItem('role');
+  },
+  lire(id){
+    axios.put(`Notification?id=${id}`,{
+        etat:"lu"
+      })
+      .then(reponse=>{
+        axios.get(`Notification/societe?id=${id}&id1=${this.userid}`)
+      .then(reponse=>{
+         this.Notification = reponse.data;
+         this.length = this.Notification.length
+      });
+      axios.get(`Notification?id=${this.userid}`)
+      .then(reponse=>{
+         this.Notifications = reponse.data;
+      });
+      console.log(reponse)
+      location.reload()
+      })
   }
   },
   components: {
