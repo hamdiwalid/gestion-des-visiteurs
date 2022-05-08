@@ -75,7 +75,7 @@ namespace backend.Controllers
         {
             string query = @"
                              Update dbo.[User]
-                             set identifiant = @userName, nom = @firstName, prenom = @lastName,motpasse = @password,role = @role,cin = @cin
+                             set identifiant = @userName, nom = @firstName, prenom = @lastName,cin = @cin
                              where UserId=@UserId
                             ";
             DataTable dt = new DataTable();
@@ -90,8 +90,6 @@ namespace backend.Controllers
                     cmd.Parameters.AddWithValue("@UserName", user.identifiant);
                     cmd.Parameters.AddWithValue("@FirstName", user.nom);
                     cmd.Parameters.AddWithValue("@LastName", user.prenom);
-                    cmd.Parameters.AddWithValue("@Password", user.motpasse);
-                    cmd.Parameters.AddWithValue("@role", user.role);
                     cmd.Parameters.AddWithValue("@CIN", user.CIN);
                     sqlDataReader = cmd.ExecuteReader();
                     dt.Load(sqlDataReader);
@@ -152,7 +150,34 @@ namespace backend.Controllers
             }
             return new JsonResult(dt);
         }
+        [HttpPut]
+        [Route("motpasse")]
+        public JsonResult Putpassword(User user, int id)
+        {
+            string query = @"
+                             Update dbo.[User]
+                             set motpasse = @motpasse
+                             where UserId=@UserId
+                            ";
+            DataTable dt = new DataTable();
+            string sqlDataSource = _configuration.GetConnectionString("AppCon");
+            SqlDataReader sqlDataReader;
+            using (SqlConnection Con = new SqlConnection(sqlDataSource))
+            {
+                Con.Open();
+                using (SqlCommand cmd = new SqlCommand(query, Con))
+                {
+                    cmd.Parameters.AddWithValue("@UserId", id);
+                    cmd.Parameters.AddWithValue("@motpasse", user.motpasse);
+                    sqlDataReader = cmd.ExecuteReader();
+                    dt.Load(sqlDataReader);
+                    sqlDataReader.Close();
+                    Con.Close();
+                }
 
+            }
+            return new JsonResult("Modifie avec succès");
+        }
 
     }
 }

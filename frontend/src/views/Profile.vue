@@ -23,8 +23,8 @@
         </div>
         <div class="col-auto my-auto">
           <div class="h-100">
-            <h5 class="mb-1">Alec Thompson</h5>
-            <p class="mb-0 text-sm font-weight-bold">CEO / Co-Founder</p>
+            <h5 class="mb-1">{{users.nom}} {{users.prenom}}</h5>
+            <p class="mb-0 text-sm font-weight-bold" style="text-transform: uppercase;">{{users.role}}</p>
           </div>
         </div>
         <div
@@ -40,8 +40,7 @@
   <div class="py-4 container-fluid">
     <div class="mt-3 row">
         <profile-info-card
-          title="Profile Information"
-          description="Hi, I’m Alec Thompson, Decisions: If you can’t decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality)."
+          title="Informations de profil"
           :info="{
             fullName: 'Alec M. Thompson',
             mobile: '(44) 123 1234 123',
@@ -92,7 +91,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import setNavPills from "@/assets/js/nav-pills.js";
 import setTooltip from "@/assets/js/tooltip.js";
-
+import axios from 'axios';
 export default {
   name: "ProfileOverview",
   components: {
@@ -116,9 +115,18 @@ export default {
       faFacebook,
       faTwitter,
       faInstagram,
+      users:[]
     };
   },
-
+created(){
+   this.user = localStorage.getItem("currentUser");
+   var id = this.user[10];
+   axios.get(`User/${id}`)
+      .then(reponse=>{
+         this.users = reponse.data[0];
+         console.log(this.users)
+      });
+  },
   mounted() {
     this.$store.state.isAbsolute = true;
     setNavPills();

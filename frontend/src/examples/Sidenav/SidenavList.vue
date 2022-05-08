@@ -19,7 +19,7 @@
         </sidenav-collapse>
       </li>
       <li class="nav-item" v-if="role == 'agent'">
-        <sidenav-collapse navText="Les demandes" :to="{ name: 'Demandes agent' }">
+        <sidenav-collapse navText="Les demandes" :to="{ name: 'Visiteur' }">
           <template #icon>
             <document />
           </template>
@@ -47,7 +47,7 @@
         </sidenav-collapse>
       </li>
       <li class="nav-item">
-        <sidenav-collapse navText="Profile" :to="{ name: 'Profile' }">
+        <sidenav-collapse navText="Profil" :to="{ name: 'Profil' }">
           <template #icon>
             <customer-support />
           </template>

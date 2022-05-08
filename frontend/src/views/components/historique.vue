@@ -66,12 +66,12 @@
                 <span v-if="demande.etat == 'present'"
               class=" text-success text-gradient px-3 mb-0"
             >
-              Présent
+              Acceptée
             </span>
             <span v-if="demande.etat == 'absent'"
               class="text-danger text-gradient px-3 mb-0"
             >
-              Absent
+              Refusée
             </span>
                 </div>
               </td>

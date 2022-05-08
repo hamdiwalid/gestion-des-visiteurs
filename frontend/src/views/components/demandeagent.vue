@@ -3,7 +3,7 @@
     
 
 <div class="card-header pb-0">
-      <h6>Demandes</h6>
+      <h6>Listes des visiteurs</h6>
       <button @click="toggleModal" type="button" id="btn1" class="btn btn-success mb-4">+</button>
     </div>
 
@@ -74,13 +74,13 @@
               class="btn btn-link text-success text-gradient px-3 mb-0"
               href="javascript:;"
             >
-              Présent
+              Valider
             </a>
             <a @click="refuse(demande.id)"
               class="btn btn-link text-danger text-gradient px-3 mb-0"
               href="javascript:;"
             >
-              Absent
+              Refuser
             </a>
                 </div>
               </td>
@@ -92,7 +92,7 @@
   </div>
 <ModalC @close="toggleModal" :modalActive="modalActive">
       <div class="modal-content">
-        <h4>Ajouter une demande</h4>
+        <h4>Ajouter un visiteur</h4>
         <form role="form" @submit.prevent="ajouter" class="text-start">
                     <label>Motivé</label>
                     <input

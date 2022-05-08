@@ -1,7 +1,7 @@
 <template>
   <div class="card mb-4">
     <div class="card-header pb-0">
-      <h6>Demandes</h6>
+      <h6>Listes des demandes</h6>
                   <button @click="toggleModal" type="button" id="btn1" class="btn btn-success mb-4">+</button>
 
     </div>
@@ -10,6 +10,11 @@
         <table class="table align-items-center mb-0">
           <thead>
             <tr>
+              <th
+                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+              >
+                ID
+              </th>
               <th
                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
               >
@@ -30,11 +35,16 @@
               >
                 Sociéte
               </th>
-              <th  class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"></th>
+              <th  class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                Action
+              </th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="demande in demandes" :key="demande.id">
+            <td class="align-middle text-center">
+                 {{demande.id}}
+              </td>
               <td class="align-middle text-center">
                  {{demande.motive}}
               </td>
@@ -56,7 +66,20 @@
                   </div>
               </td>
               <td>
-
+                                <div class="ms-auto text-end">
+                <a @click="accepte(demande.id)"
+              class="btn btn-link text-success text-gradient px-3 mb-0"
+              href="javascript:;"
+            >
+              Valider
+            </a>
+            <a @click="refuse(demande.id)"
+              class="btn btn-link text-danger text-gradient px-3 mb-0"
+              href="javascript:;"
+            >
+              Refuser
+            </a>
+                </div>
               </td>
             </tr>
           </tbody>
@@ -204,6 +227,51 @@ export default {
       }
 
       e.preventDefault();
+    },
+        accepte(id){
+      axios.put(`Demande?id=${id}`,{
+        etat:"present"
+      })
+      .then(reponse=>{
+        axios.post('Notification',{
+          etat: "nonlu",
+          titre: "Demande acceptée",
+          userId: this.user[10],
+          societeid: this.societech
+        })
+        .then(reponse=>{
+          console.log(reponse)
+        })
+        axios.get('Demande')
+      .then(reponse=>{
+         this.demandes = reponse.data;
+        console.log(this.demandes);
+      });
+        console.log(reponse)
+      })
+    },
+    refuse(id){
+      axios.put(`Demande?id=${id}`,{
+        etat:"absent"
+      })
+      .then(reponse=>{
+        axios.post('Notification',{
+          etat: "nonlu",
+          titre: "Demande refusée",
+          userId: this.user[10],
+          societeid: this.societech
+        })
+        .then(reponse=>{
+          console.log(reponse)
+        })
+        axios.get('Demande')
+      .then(reponse=>{
+         this.demandes = reponse.data;
+        console.log(this.demandes);
+      });
+        console.log(reponse)
+        location.reload()
+      })
     }
   }
 };

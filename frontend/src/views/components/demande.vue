@@ -1,7 +1,7 @@
 <template>
   <div class="card mb-4">
     <div class="card-header pb-0">
-      <h6>Demandes</h6>
+      <h6>Listes des demandes</h6>
             <button @click="toggleModal" type="button" id="btn1" class="btn btn-success mb-4">+</button>
     </div>
     <div class="card-body px-0 pt-0 pb-2">
@@ -74,13 +74,13 @@
               class="btn btn-link text-success text-gradient px-3 mb-0"
               href="javascript:;"
             >
-              Présent
+              Valider
             </a>
             <a @click="refuse(demande.id)"
               class="btn btn-link text-danger text-gradient px-3 mb-0"
               href="javascript:;"
             >
-              Absent
+              Refuser
             </a>
                 </div>
               </td>

@@ -31,8 +31,8 @@ const routes = [
     component: Demandes,
   },
   {
-    path: "/profile",
-    name: "Profile",
+    path: "/profil",
+    name: "Profil",
     component: Profile,
   },
   {
@@ -62,7 +62,7 @@ const routes = [
   },
   {
     path: "/demandeAgent",
-    name: "Demandes agent",
+    name: "Visiteur",
     component: DemandesAgent,
   },
   {
