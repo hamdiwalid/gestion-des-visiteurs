@@ -3,12 +3,29 @@
     <div class="card-header pb-0">
       <h6>Agents sécurités</h6>
       <button @click="toggleModal" type="button" id="btn1" class="btn btn-success mb-4">+</button>
+      <div class="row">
+    <div class=" col-xl-4 col-lg-5 col-md-6 d-flex flex-column">
+      <input
+                      id="search"
+                      type="string"
+                      placeholder="Recherche"
+                      class="form-control col-6"
+                      name="search"
+                      v-model="search"
+                    />
+                    </div>
+                    </div>
     </div>
     <div class="card-body px-0 pt-0 pb-2">
       <div class="table-responsive p-0">
         <table class="table align-items-center mb-0">
           <thead>
             <tr>
+              <th
+                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+              >
+                ID
+              </th>
               <th
                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
               >
@@ -30,7 +47,10 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="agent in agents" :key="agent.UserId">
+            <tr v-for="agent in filteredItems" :key="agent.UserId">
+            <td class="align-middle text-center">
+                 {{agent.UserId}}
+              </td>
               <td class="align-middle text-center">
                  {{agent.nom}}
               </td>
@@ -157,6 +177,8 @@ export default {
       motpasse:'',
       cin:null,
       errors: [],
+      search:"",
+      table:[],
     };
   },
   components: {
@@ -174,7 +196,17 @@ export default {
       axios.get('Agent')
       .then(reponse=>{
          this.agents = reponse.data;
+         for (let i = 0; i < this.agents.length; i++) {
+           this.table.push(this.agents[i]);
+         }
       })
+  },
+  computed: {
+    filteredItems() {
+      return  this.table.filter((item) => {
+        return item.nom.toLowerCase().includes(this.search.toLowerCase()) || item.prenom.toLowerCase().includes(this.search.toLowerCase());
+      });
+    },
   },
   methods:{
 ajouter: function(e){

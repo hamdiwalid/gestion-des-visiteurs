@@ -2,6 +2,18 @@
   <div class="card mb-4">
     <div class="card-header pb-0">
       <h6>Historique des demandes</h6>
+      <div class="row">
+    <div class=" col-xl-4 col-lg-5 col-md-6 d-flex flex-column">
+      <input
+                      id="search"
+                      type="string"
+                      placeholder="Recherche"
+                      class="form-control col-6"
+                      name="search"
+                      v-model="search"
+                    />
+                    </div>
+                    </div>
     </div>
     <div class="card-body px-0 pt-0 pb-2">
       <div class="table-responsive p-0">
@@ -37,7 +49,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="demande in demandes" :key="demande.id">
+            <tr v-for="demande in filteredItems" :key="demande.id">
               <td class="align-middle text-center">
                  {{demande.id}}
               </td>
@@ -103,7 +115,9 @@ export default {
       img6,
       demandes:null,
       users:null,
-      societes:null
+      societes:null,
+      search:"",
+      table:[],
     };
   },
   components: {
@@ -112,6 +126,9 @@ export default {
       axios.get('Demande/historique')
       .then(reponse=>{
          this.demandes = reponse.data;
+         for (let i = 0; i < this.demandes.length; i++) {
+           this.table.push(this.demandes[i]);
+         }
       });
       axios.get('User')
       .then(reponse=>{
@@ -121,6 +138,13 @@ export default {
       .then(reponse =>{
         this.societes = reponse.data;
       })
+  },
+  computed: {
+    filteredItems() {
+      return  this.table.filter((item) => {
+        return item.motive.toLowerCase().includes(this.search.toLowerCase());
+      });
+    },
   },
   methods:{
 

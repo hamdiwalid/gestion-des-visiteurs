@@ -3,7 +3,18 @@
     <div class="card-header pb-0">
       <h6>Listes des demandes</h6>
                   <button @click="toggleModal" type="button" id="btn1" class="btn btn-success mb-4">+</button>
-
+<div class="row">
+    <div class=" col-xl-4 col-lg-5 col-md-6 d-flex flex-column">
+      <input
+                      id="search"
+                      type="string"
+                      placeholder="Recherche"
+                      class="form-control col-6"
+                      name="search"
+                      v-model="search"
+                    />
+                    </div>
+                    </div>
     </div>
     <div class="card-body px-0 pt-0 pb-2">
       <div class="table-responsive p-0">
@@ -41,7 +52,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="demande in demandes" :key="demande.id">
+            <tr v-for="demande in filteredItems" :key="demande.id">
             <td class="align-middle text-center">
                  {{demande.id}}
               </td>
@@ -157,6 +168,8 @@ export default {
       societech:null,
       date: new Date(),
       errors: [],
+      search:"",
+      table:[],
     };
   },
   components: {
@@ -176,7 +189,9 @@ export default {
       axios.get(`Demande/dsociete?id=${id}`)
       .then(reponse=>{
          this.demandes = reponse.data;
-        console.log(this.demandes);
+        for (let i = 0; i < this.demandes.length; i++) {
+           this.table.push(this.demandes[i]);
+         }
       });
       axios.get('User')
       .then(reponse=>{
@@ -188,6 +203,13 @@ export default {
       });
       this.user = localStorage.getItem("currentUser");
       
+  },
+  computed: {
+    filteredItems() {
+      return  this.table.filter((item) => {
+        return item.motive.toLowerCase().includes(this.search.toLowerCase());
+      });
+    },
   },
   methods:{
    ajouter: function (e) {

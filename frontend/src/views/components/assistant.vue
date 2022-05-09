@@ -3,6 +3,18 @@
     <div class="card-header pb-0">
       <h6>Assistants</h6>
       <button @click="toggleModal" type="button" id="btn1" class="btn btn-success mb-4">+</button>
+      <div class="row">
+    <div class=" col-xl-4 col-lg-5 col-md-6 d-flex flex-column">
+      <input
+                      id="search"
+                      type="string"
+                      placeholder="Recherche"
+                      class="form-control col-6"
+                      name="search"
+                      v-model="search"
+                    />
+                    </div>
+                    </div>
     </div>
     <div class="card-body px-0 pt-0 pb-2">
       <div class="table-responsive p-0">
@@ -33,7 +45,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="assistant in assistants" :key="assistant.UserId">
+            <tr v-for="assistant in filteredItems" :key="assistant.UserId">
               <td class="align-middle text-center">
                 {{assistant.UserId}}
               </td>
@@ -163,6 +175,8 @@ export default {
       cin:null,
       societech:null,
       errors: [],
+      search:"",
+      table:[],
     };
   },
   components: {
@@ -180,9 +194,18 @@ export default {
       axios.get('Assistant')
       .then(reponse=>{
          this.assistants = reponse.data;
-        console.log(this.assistants);
+        for (let i = 0; i < this.assistants.length; i++) {
+           this.table.push(this.assistants[i]);
+         }
       });
       this.user = localStorage.getItem("currentUser");
+  },
+  computed: {
+    filteredItems() {
+      return  this.table.filter((item) => {
+        return item.nom.toLowerCase().includes(this.search.toLowerCase()) || item.prenom.toLowerCase().includes(this.search.toLowerCase());
+      });
+    },
   },
   methods:{
     ajouter: function(e){
