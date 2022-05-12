@@ -24,11 +24,6 @@
               <th
                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
               >
-                ID
-              </th>
-              <th
-                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-              >
                 Nom
               </th>
               <th
@@ -39,7 +34,7 @@
               <th
                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
               >
-                Matricule
+                Matricule fiscal
               </th>
               <th
                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
@@ -48,9 +43,6 @@
           </thead>
           <tbody>
             <tr v-for="societe in filteredItems" :key="societe.id">
-            <td class="align-middle text-center">
-                {{societe.id}}
-              </td>
               <td class="align-middle text-center">
                 {{societe.nom}}
               </td>
@@ -68,11 +60,60 @@
             >
               <i class="far fa-trash-alt me-2" aria-hidden="true"></i>Supprimer
             </a>
-            <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;">
+            <a @click="toggleModal1"
+            class="btn btn-link text-dark px-3 mb-0" href="javascript:;">
               <i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i
               >Modifier
             </a>
+            
           </div>
+          <ModalC @close="toggleModal1" :modalActive="modalActive1">
+      <div class="modal-content">
+        <form role="form" @submit.prevent="ajouter" class="text-start">
+                    <label>Nom</label>
+                    <input
+                      id="nom"
+                      type="string"
+                      placeholder="Nom"
+                      class="form-control"
+                      name="nom"
+                      v-model="societe.nom"
+                    />
+                    <label>Description</label>
+                    <textarea id="description"
+                      type="string"
+                      placeholder="Description"
+                      class="form-control"
+                      name="description"
+                      v-model="societe.description"
+                      />
+                      <label>Matricule fiscal</label>
+                    <input
+                      id="matricule"
+                      type="string"
+                      placeholder="Matricule fiscal"
+                      class="form-control"
+                      name="matricule"
+                      v-model="societe.matricule"
+                    />
+                    <div class="text-center">
+                      <vsud-button @click="modifier(societe.id,societe.nom,societe.description,societe.matricule)"
+                        class="btn btn-success mb-4"
+                        variant="gradient"
+                        color="success"
+                        id="btn2"
+                        >Modifier
+                      </vsud-button>
+                    </div>
+                    <p id="p" v-if="errors1.length">
+                        <b>Veuillez corriger les erreurs suivantes:</b>
+                        <ul>
+                        <li v-for="error in errors1 " :key="error">{{ error }}</li>
+                        </ul>
+                    </p>
+                  </form>
+      </div>
+    </ModalC>
               </td>
             </tr>
           </tbody>
@@ -95,17 +136,17 @@
                     />
                     <label>Description</label>
                     <textarea id="description"
-                      type="password"
+                      type="string"
                       placeholder="Description"
                       class="form-control"
                       name="description"
                       v-model="description"
                       />
-                      <label>Matricule</label>
+                      <label>Matricule fiscal</label>
                     <input
                       id="matricule"
                       type="string"
-                      placeholder="Matricule"
+                      placeholder="Matricule fiscal"
                       class="form-control"
                       name="matricule"
                       v-model="matricule"
@@ -158,6 +199,8 @@ export default {
       errors: [],
       search:"",
       table:[],
+      errors1: [],
+      societesid:{},
     };
   },
   components: {
@@ -169,7 +212,11 @@ export default {
     const toggleModal = () => {
       modalActive.value = !modalActive.value;
     };
-    return { modalActive, toggleModal };
+    const modalActive1 = ref(false);
+    const toggleModal1 = () => {
+      modalActive1.value = !modalActive1.value;
+    };
+    return { modalActive, toggleModal, modalActive1, toggleModal1 };
   },
   async created(){
       axios.get('Societe')
@@ -223,6 +270,37 @@ export default {
          this.societes = reponse.data;
       })
         console.log(reponse)
+      })
+    },
+    modifier(id,nom,description,matricule){
+      if (nom && matricule) {
+      axios.put(`Societe?id=${id}`,{
+        nom:nom,
+        description:description,
+        matricule:matricule
+      })
+      .then(reponse=>{
+        axios.get('Societe')
+      .then(reponse=>{
+         this.societes = reponse.data;
+      })
+        console.log(reponse)
+        location.reload()
+      })
+      }
+      this.errors1 = [];
+
+      if (!nom) {
+        this.errors1.push('Nom est obligatoire.');
+      }
+      if (!matricule) {
+        this.errors1.push('Matricule est obligatoire.');
+      }
+    },
+    getbyid(id){
+      axios.get(`Societe/${id}`)
+      .then(reponse=>{
+         this.societesid = reponse.data;
       })
     }
   }

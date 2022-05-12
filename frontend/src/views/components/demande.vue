@@ -30,7 +30,7 @@
               <th
                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
               >
-                Motivé
+                Motif
               </th>
               <th
                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
@@ -48,8 +48,6 @@
                 Sociéte
               </th>
               <th  class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
-                            <th  class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
-
             </tr>
           </thead>
           <tbody>
@@ -78,9 +76,6 @@
                   </div>
                   </div>
               </td>
-              <td class="align-middle text-center">
-                    {{ demande.etat }} 
-              </td>
               <td>
                 <div class="ms-auto text-end">
                 <a @click="accepte(demande.id)"
@@ -108,11 +103,19 @@
       <div class="modal-content">
         <h4>Ajouter une demande</h4>
         <form role="form" @submit.prevent="ajouter" class="text-start">
-                    <label>Motivé</label>
+          <label>Nom visiteur</label>
+                    <input
+                      id="nomvisiteur"
+                      type="string"
+                      placeholder="Nom visiteur"
+                      class="form-control"
+                      name="nomvisiteur"
+                    />
+                    <label>Motif</label>
                     <input
                       id="motive"
                       type="string"
-                      placeholder="Motivé"
+                      placeholder="Motif"
                       class="form-control"
                       name="motive"
                       v-model="motive"
@@ -181,6 +184,7 @@ export default {
       errors: [],
       search:"",
       table:[],
+      user:null
     };
   },
   components: {
@@ -197,13 +201,14 @@ export default {
     return { modalActive, toggleModal };
   },
   async created(){
+    this.user = JSON.parse(localStorage.getItem("currentUser"));
+    //API get les demandes 
       axios.get('Demande')
       .then(reponse=>{
          this.demandes = reponse.data;
          for (let i = 0; i < this.demandes.length; i++) {
            this.table.push(this.demandes[i]);
          }
-         
       });
       axios.get('User')
       .then(reponse=>{
@@ -213,7 +218,7 @@ export default {
       .then(reponse =>{
         this.societes = reponse.data;
       })
-      this.user = localStorage.getItem("currentUser");
+      
   },
   computed: {
     filteredItems() {
@@ -228,7 +233,7 @@ export default {
       axios.post('Demande',{
         description:this.description,
         motive:this.motive,
-        userId:this.user[10],
+        userId:this.user.UserId,
         societeId:this.societech,
         date:this.date,
         etat:'nonpresent',
@@ -237,7 +242,7 @@ export default {
         axios.post('Notification',{
           etat: "nonlu",
           titre: "Nouvelle demande",
-          userId: this.user[10],
+          userId: this.user.UserId,
           societeid: this.societech
         })
         .then(reponse=>{
@@ -270,7 +275,7 @@ export default {
         axios.post('Notification',{
           etat: "nonlu",
           titre: "Demande acceptée",
-          userId: this.user[10],
+          userId: this.user.UserId,
           societeid: this.societech
         })
         .then(reponse=>{
@@ -291,7 +296,7 @@ export default {
         axios.post('Notification',{
           etat: "nonlu",
           titre: "Demande refusée",
-          userId: this.user[10],
+          userId: this.user.UserId,
           societeid: this.societech
         })
         .then(reponse=>{

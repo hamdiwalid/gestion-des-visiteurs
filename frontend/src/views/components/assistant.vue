@@ -65,11 +65,69 @@
             >
               <i class="far fa-trash-alt me-2" aria-hidden="true"></i>Supprimer
             </a>
-            <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;">
+            <a @click="toggleModal1" class="btn btn-link text-dark px-3 mb-0" href="javascript:;">
               <i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i
               >Modifier
             </a>
           </div>
+          <ModalC @close="toggleModal1" :modalActive="modalActive1">
+      <div class="modal-content">
+        <form role="form" @submit.prevent="ajouter" class="text-start">
+                    <label>Identifiant</label>
+                    <input
+                      id="identifiant"
+                      type="string"
+                      placeholder="Identifiant"
+                      class="form-control"
+                      name="identifiant"
+                      v-model="assistant.identifiant"
+                    />
+                    <label>Nom</label>
+                    <input
+                      id="nom"
+                      type="string"
+                      placeholder="Nom"
+                      class="form-control"
+                      name="nom"
+                      v-model="assistant.nom"
+                    />
+                    <label>Prénom</label>
+                    <input
+                      id="prenom"
+                      type="string"
+                      placeholder="Prénom"
+                      class="form-control"
+                      name="prenom"
+                      v-model="assistant.prenom"
+                    />
+                    <label>CIN</label>
+                    <input
+                      id="cin"
+                      type="number"
+                      placeholder="CIN"
+                      class="form-control"
+                      name="cin"
+                      v-model="assistant.CIN"
+                    />
+
+                    <div class="text-center">
+                      <vsud-button @click="modifier(assistant.UserId,assistant.identifiant,assistant.nom,assistant.prenom,assistant.CIN)"
+                        class="btn btn-success mb-4"
+                        variant="gradient"
+                        color="success"
+                        id="btn2"
+                        >Modifier
+                      </vsud-button>
+                    </div>
+                    <p id="p" v-if="errors1.length">
+                        <b>Veuillez corriger les erreurs suivantes:</b>
+                        <ul>
+                        <li v-for="error in errors1 " :key="error">{{ error }}</li>
+                        </ul>
+                    </p>
+                  </form>
+      </div>
+    </ModalC>
               </td>
             </tr>
           </tbody>
@@ -177,6 +235,7 @@ export default {
       errors: [],
       search:"",
       table:[],
+       errors1: [],
     };
   },
   components: {
@@ -188,7 +247,11 @@ export default {
     const toggleModal = () => {
       modalActive.value = !modalActive.value;
     };
-    return { modalActive, toggleModal };
+    const modalActive1 = ref(false);
+    const toggleModal1 = () => {
+      modalActive1.value = !modalActive1.value;
+    };
+    return { modalActive, toggleModal, modalActive1, toggleModal1 };
   },
   async created(){
       axios.get('Assistant')
@@ -198,7 +261,7 @@ export default {
            this.table.push(this.assistants[i]);
          }
       });
-      this.user = localStorage.getItem("currentUser");
+      this.user = JSON.parse(localStorage.getItem("currentUser"));
   },
   computed: {
     filteredItems() {
@@ -217,13 +280,12 @@ export default {
         motpasse:this.motpasse,
         role:"assistant",
         CIN:this.cin,
-        societeId:this.user[this.user.length-2]
+        societeId:this.user.SocieteId
       })
       .then(reponse=>{
         axios.get('Assistant')
       .then(reponse=>{
          this.assistants = reponse.data;
-        console.log(this.assistants);
       });
         console.log(reponse)
         location.reload()
@@ -255,10 +317,38 @@ export default {
         axios.get('Assistant')
       .then(reponse=>{
          this.assistants = reponse.data;
-        console.log(this.assistants);
       });
         console.log(reponse)
       })
+    },
+    modifier(id,identifiant,nom,prenom,CIN){
+      if (identifiant && nom && prenom && CIN) {
+        axios.put(`User?id=${id}`,{
+        identifiant:identifiant,
+        nom:nom,
+        prenom:prenom,
+        CIN:CIN,
+        societeId:0
+      })
+      .then(reponse=>{
+         console.log(reponse)
+         location.reload()
+      })
+      }
+       this.errors1 = [];
+
+      if (!identifiant) {
+        this.errors1.push('Identifiant est obligatoire.');
+      }
+      if (!nom) {
+        this.errors1.push('Nom est obligatoire.');
+      }
+      if (!prenom) {
+        this.errors1.push('Prenom est obligatoire.');
+      }
+      if (!CIN) {
+        this.errors1.push('CIN est obligatoire.');
+      }
     }
   }
 };

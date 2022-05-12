@@ -33,6 +33,13 @@
         </sidenav-collapse>
       </li>
       <li class="nav-item" v-if="role == 'admin'">
+        <sidenav-collapse navText="Sociétes" :to="{ name: 'Sociéte' }">
+          <template #icon>
+            <document />
+          </template>
+        </sidenav-collapse>
+      </li>
+      <li class="nav-item" v-if="role == 'admin'">
         <sidenav-collapse navText="Responsable société" :to="{ name: 'Responsables' }">
           <template #icon>
             <document />
@@ -53,13 +60,7 @@
           </template>
         </sidenav-collapse>
       </li>
-      <li class="nav-item" v-if="role == 'admin'">
-        <sidenav-collapse navText="Sociétes" :to="{ name: 'Sociéte' }">
-          <template #icon>
-            <document />
-          </template>
-        </sidenav-collapse>
-      </li>
+      
       <li class="nav-item" v-if="role == 'admin'">
         <sidenav-collapse navText="Historique" :to="{ name: 'Historique' }">
           <template #icon>
@@ -104,7 +105,7 @@ export default {
     };
   },
   async created(){
-      this.user = localStorage.getItem("currentUser");
+      this.user = JSON.parse(localStorage.getItem("currentUser"));
       this.role = localStorage.getItem("role");
   },
   components: {

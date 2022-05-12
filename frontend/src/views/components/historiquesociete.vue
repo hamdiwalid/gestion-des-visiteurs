@@ -123,8 +123,8 @@ export default {
   components: {
   },
   async created(){
-    this.user = localStorage.getItem("currentUser");
-   var id = this.user[this.user.length-2]
+    this.user = JSON.parse(localStorage.getItem("currentUser"));
+   var id = this.user.SocieteId;
       axios.get(`Demande/hsociete?=${id}`)
       .then(reponse=>{
          this.demandes = reponse.data;

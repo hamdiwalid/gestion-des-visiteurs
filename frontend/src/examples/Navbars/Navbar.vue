@@ -157,10 +157,10 @@ export default {
   props: ["minNav", "textWhite"],
   created() {
     this.minNav;
-    this.user = localStorage.getItem("currentUser");
-    this.userid = this.user[10];
-    this.role = localStorage.getItem("role");
-    var id = this.user[this.user.length-2];
+    this.user = JSON.parse(localStorage.getItem("currentUser"));
+    if(this.user != null){
+    this.userid = this.user.UserId;
+    var id = this.user.SocieteId;
     axios.get(`Notification/societe?id=${id}&id1=${this.userid}`)
       .then(reponse=>{
          this.Notification = reponse.data;
@@ -170,6 +170,9 @@ export default {
       .then(reponse=>{
          this.Notifications = reponse.data;
       });
+    }
+    this.role = localStorage.getItem("role");
+    
       axios.get(`User`)
       .then(reponse=>{
          this.users = reponse.data;

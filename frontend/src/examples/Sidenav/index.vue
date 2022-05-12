@@ -10,7 +10,7 @@
         aria-hidden="true"
         id="iconSidenav"
       ></i>
-      <a class="m-0 navbar-brand" href="/">
+      <a class="m-0 navbar-brand">
         <img :src="logo" class="navbar-brand-img h-100" alt="main_logo" />
         <span class="ms-1 font-weight-bold" style="text-transform: uppercase;">{{role}}</span>
       </a>

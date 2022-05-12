@@ -67,11 +67,69 @@
             >
               <i class="far fa-trash-alt me-2" aria-hidden="true"></i>Supprimer
             </a>
-            <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;">
+            <a @click="toggleModal1" class="btn btn-link text-dark px-3 mb-0" href="javascript:;">
               <i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i
               >Modifier
             </a>
           </div>
+          <ModalC @close="toggleModal1" :modalActive="modalActive1">
+      <div class="modal-content">
+        <form role="form" @submit.prevent="ajouter" class="text-start">
+                    <label>Identifiant</label>
+                    <input
+                      id="identifiant"
+                      type="string"
+                      placeholder="Identifiant"
+                      class="form-control"
+                      name="identifiant"
+                      v-model="responsable.identifiant"
+                    />
+                    <label>Nom</label>
+                    <input
+                      id="nom"
+                      type="string"
+                      placeholder="Nom"
+                      class="form-control"
+                      name="nom"
+                      v-model="responsable.nom"
+                    />
+                    <label>Prénom</label>
+                    <input
+                      id="prenom"
+                      type="string"
+                      placeholder="Prénom"
+                      class="form-control"
+                      name="prenom"
+                      v-model="responsable.prenom"
+                    />
+                    <label>CIN</label>
+                    <input
+                      id="cin"
+                      type="number"
+                      placeholder="CIN"
+                      class="form-control"
+                      name="cin"
+                      v-model="responsable.CIN"
+                    />
+
+                    <div class="text-center">
+                      <vsud-button @click="modifier(responsable.UserId,responsable.identifiant,responsable.nom,responsable.prenom,responsable.CIN)"
+                        class="btn btn-success mb-4"
+                        variant="gradient"
+                        color="success"
+                        id="btn2"
+                        >Modifier
+                      </vsud-button>
+                    </div>
+                    <p id="p" v-if="errors1.length">
+                        <b>Veuillez corriger les erreurs suivantes:</b>
+                        <ul>
+                        <li v-for="error in errors1 " :key="error">{{ error }}</li>
+                        </ul>
+                    </p>
+                  </form>
+      </div>
+    </ModalC>
               </td>
             </tr>
           </tbody>
@@ -82,7 +140,7 @@
    <ModalC @close="toggleModal" :modalActive="modalActive">
       <div class="modal-content">
         <h4>Ajouter responsable</h4>
-        <form role="form" @submit.prevent="ajouter" class="text-start">
+        <form role="form" class="text-start">
                     <label>Identifiant</label>
                     <input
                       id="identifiant"
@@ -184,6 +242,7 @@ export default {
       errors: [],
       search:"",
       table:[],
+      errors1: [],
     };
   },
   components: {
@@ -195,7 +254,11 @@ export default {
     const toggleModal = () => {
       modalActive.value = !modalActive.value;
     };
-    return { modalActive, toggleModal };
+    const modalActive1 = ref(false);
+    const toggleModal1 = () => {
+      modalActive1.value = !modalActive1.value;
+    };
+    return { modalActive, toggleModal, modalActive1, toggleModal1 };
   },
   async created(){
       axios.get('Responsable')
@@ -270,6 +333,35 @@ ajouter: function(e){
       });
         console.log(reponse)
       })
+    },
+    modifier(id,identifiant,nom,prenom,CIN){
+      if (identifiant && nom && prenom && CIN) {
+        axios.put(`User?id=${id}`,{
+        identifiant:identifiant,
+        nom:nom,
+        prenom:prenom,
+        CIN:CIN,
+        societeId:0
+      })
+      .then(reponse=>{
+         console.log(reponse)
+         location.reload()
+      })
+      }
+       this.errors1 = [];
+
+      if (!identifiant) {
+        this.errors1.push('Identifiant est obligatoire.');
+      }
+      if (!nom) {
+        this.errors1.push('Nom est obligatoire.');
+      }
+      if (!prenom) {
+        this.errors1.push('Prenom est obligatoire.');
+      }
+      if (!CIN) {
+        this.errors1.push('CIN est obligatoire.');
+      }
     }
   }
 };

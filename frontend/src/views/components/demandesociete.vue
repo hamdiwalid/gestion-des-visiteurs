@@ -78,17 +78,23 @@
               </td>
               <td>
                                 <div class="ms-auto text-end">
-                <a @click="accepte(demande.id)"
+                <a v-if="demande.etat == 'present'"
               class="btn btn-link text-success text-gradient px-3 mb-0"
               href="javascript:;"
             >
               Valider
             </a>
-            <a @click="refuse(demande.id)"
+            <a v-if="demande.etat == 'absent'"
               class="btn btn-link text-danger text-gradient px-3 mb-0"
               href="javascript:;"
             >
               Refuser
+            </a>
+            <a v-if="demande.etat == 'nonpresent'"
+              class="btn btn-link text-danger text-gradient px-3 mb-0"
+              href="javascript:;"
+            >
+              En attante
             </a>
                 </div>
               </td>
@@ -184,8 +190,8 @@ export default {
     return { modalActive, toggleModal };
   },
   async created(){
-    this.user = localStorage.getItem("currentUser");
-   var id = this.user[this.user.length-2]
+    this.user = JSON.parse(localStorage.getItem("currentUser"));
+   var id = this.user.SocieteId;
       axios.get(`Demande/dsociete?id=${id}`)
       .then(reponse=>{
          this.demandes = reponse.data;
@@ -218,7 +224,7 @@ export default {
       axios.post('Demande',{
         description:this.description,
         motive:this.motive,
-        userId:this.user[10],
+        userId:this.user.UserId,
         societeId:id ,
         date:this.date,
         etat:'nonpresent',
@@ -227,7 +233,7 @@ export default {
         axios.post('Notification',{
           etat: "nonlu",
           titre: "Nouvelle demande",
-          userId: this.user[10],
+          userId: this.user.UserId,
           societeid: id
         })
         .then(reponse=>{
@@ -258,7 +264,7 @@ export default {
         axios.post('Notification',{
           etat: "nonlu",
           titre: "Demande acceptée",
-          userId: this.user[10],
+          userId: this.user.UserId,
           societeid: this.societech
         })
         .then(reponse=>{
@@ -280,7 +286,7 @@ export default {
         axios.post('Notification',{
           etat: "nonlu",
           titre: "Demande refusée",
-          userId: this.user[10],
+          userId: this.user.UserId,
           societeid: this.societech
         })
         .then(reponse=>{

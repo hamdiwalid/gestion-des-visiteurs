@@ -86,13 +86,13 @@
               class="btn btn-link text-success text-gradient px-3 mb-0"
               href="javascript:;"
             >
-              Valider
+              Confirmer
             </a>
             <a @click="refuse(demande.id)"
               class="btn btn-link text-danger text-gradient px-3 mb-0"
               href="javascript:;"
             >
-              Refuser
+              Supprimer              
             </a>
                 </div>
               </td>
@@ -106,11 +106,19 @@
       <div class="modal-content">
         <h4>Ajouter un visiteur</h4>
         <form role="form" @submit.prevent="ajouter" class="text-start">
-                    <label>Motivé</label>
+          <label>Nom visiteur</label>
+                    <input
+                      id="nomvisiteur"
+                      type="string"
+                      placeholder="Nom visiteur"
+                      class="form-control"
+                      name="nomvisiteur"                   
+                       />
+                    <label>Motif</label>
                     <input
                       id="motive"
                       type="string"
-                      placeholder="Motivé"
+                      placeholder="Motif"
                       class="form-control"
                       name="motive"
                       v-model="motive"
@@ -207,7 +215,8 @@ export default {
       .then(reponse =>{
         this.societes = reponse.data;
       });
-       this.user = localStorage.getItem("currentUser");
+       this.user = JSON.parse(localStorage.getItem("currentUser"));
+       console.log(this.user)
   },
   computed: {
     filteredItems() {
@@ -222,7 +231,7 @@ export default {
       axios.post('Demande',{
         description:this.description,
         motive:this.motive,
-        userId:this.user[10],
+        userId:this.user.UserId,
         societeId:this.societech,
         date:this.date,
         etat:'nonpresent',
@@ -231,7 +240,7 @@ export default {
       axios.post('Notification',{
           etat: "nonlu",
           titre: "Nouvelle demande",
-          userId: this.user[10],
+          userId: this.user.UserId,
           societeid: this.societech
         })
         .then(reponse=>{
@@ -265,7 +274,7 @@ export default {
         axios.post('Notification',{
           etat: "nonlu",
           titre: "Demande acceptée",
-          userId: this.user[10],
+          userId: this.user.UserId,
           societeid: this.societech
         })
         .then(reponse=>{
@@ -287,7 +296,7 @@ export default {
         axios.post('Notification',{
           etat: "nonlu",
           titre: "Demande refusée",
-          userId: this.user[10],
+          userId: this.user.UserId,
           societeid: this.societech
         })
         .then(reponse=>{
