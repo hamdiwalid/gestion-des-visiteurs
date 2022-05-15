@@ -85,7 +85,7 @@
    <ModalC @close="toggleModal" :modalActive="modalActive">
       <div class="modal-content">
         <h4>Ajouter responsable</h4>
-        <form role="form" class="text-start">
+        <form role="form" @submit.stop.prevent="ajouter" class="text-start">
                     <label>Identifiant</label>
                     <input
                       id="identifiant"
@@ -156,12 +156,7 @@
 </template>
 
 <script>
-import img1 from "../../assets/img/team-2.jpg";
-import img2 from "../../assets/img/team-3.jpg";
-import img3 from "../../assets/img/team-4.jpg";
-import img4 from "../../assets/img/team-3.jpg";
-import img5 from "../../assets/img/team-2.jpg";
-import img6 from "../../assets/img/team-4.jpg";
+
 import axios from 'axios';
 import ModalC from "./ModalC.vue";
 import { ref } from "vue";
@@ -170,12 +165,6 @@ export default {
   name: "responsable",
   data() {
     return {
-      img1,
-      img2,
-      img3,
-      img4,
-      img5,
-      img6,
       responsables:null,
       societes:null,
       identifiant:'',

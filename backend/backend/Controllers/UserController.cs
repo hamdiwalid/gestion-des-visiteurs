@@ -178,6 +178,5 @@ namespace backend.Controllers
             }
             return new JsonResult("Modifie avec succès");
         }
-
     }
 }

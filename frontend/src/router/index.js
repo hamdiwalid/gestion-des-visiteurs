@@ -1,8 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Dashboard from "@/views/Dashboard.vue";
 import Profile from "@/views/Profile.vue";
 import SignIn from "@/views/SignIn.vue";
-import SignUp from "@/views/SignUp.vue";
 import Demandes from "../views/Demande.vue";
 import Agents from "../views/agent.vue";
 import Responsables from "../views/responsable.vue";
@@ -25,11 +23,6 @@ const routes = [
     redirect: "/sign-in",
   },
   {
-    path: "/dashboard",
-    name: "Dashboard",
-    component: Dashboard,
-  },
-  {
     path: "/demandes",
     name: "Demandes",
     component: Demandes,
@@ -48,11 +41,6 @@ const routes = [
     path: "/sign-in",
     name: "Sign In",
     component: SignIn,
-  },
-  {
-    path: "/sign-up",
-    name: "Sign Up",
-    component: SignUp,
   },
   {
     path: "/responsable",

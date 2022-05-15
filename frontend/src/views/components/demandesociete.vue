@@ -29,7 +29,7 @@
               <th
                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
               >
-                Motivé
+                Motif
               </th>
               <th
                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
@@ -108,11 +108,19 @@
       <div class="modal-content">
         <h4>Ajouter une demande</h4>
         <form role="form" @submit.prevent="ajouter" class="text-start">
-                    <label>Motivé</label>
+                   <label>Nom visiteur</label>
+                    <input
+                      id="nomvisiteur"
+                      type="string"
+                      placeholder="Nom visiteur"
+                      class="form-control"
+                      name="nomvisiteur"
+                    />
+                    <label>Motif</label>
                     <input
                       id="motive"
                       type="string"
-                      placeholder="Motivé"
+                      placeholder="Motif"
                       class="form-control"
                       name="motive"
                       v-model="motive"
