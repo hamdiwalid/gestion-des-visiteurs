@@ -67,69 +67,14 @@
             >
               <i class="far fa-trash-alt me-2" aria-hidden="true"></i>Supprimer
             </a>
-            <a @click="toggleModal1" class="btn btn-link text-dark px-3 mb-0" href="javascript:;">
+            <router-link :to="`/modifierresponsable/${responsable.UserId}`">
+            <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;">
               <i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i
               >Modifier
             </a>
+            </router-link>
           </div>
-          <ModalC @close="toggleModal1" :modalActive="modalActive1">
-      <div class="modal-content">
-        <form role="form" @submit.prevent="ajouter" class="text-start">
-                    <label>Identifiant</label>
-                    <input
-                      id="identifiant"
-                      type="string"
-                      placeholder="Identifiant"
-                      class="form-control"
-                      name="identifiant"
-                      v-model="responsable.identifiant"
-                    />
-                    <label>Nom</label>
-                    <input
-                      id="nom"
-                      type="string"
-                      placeholder="Nom"
-                      class="form-control"
-                      name="nom"
-                      v-model="responsable.nom"
-                    />
-                    <label>Prénom</label>
-                    <input
-                      id="prenom"
-                      type="string"
-                      placeholder="Prénom"
-                      class="form-control"
-                      name="prenom"
-                      v-model="responsable.prenom"
-                    />
-                    <label>CIN</label>
-                    <input
-                      id="cin"
-                      type="number"
-                      placeholder="CIN"
-                      class="form-control"
-                      name="cin"
-                      v-model="responsable.CIN"
-                    />
 
-                    <div class="text-center">
-                      <vsud-button @click="modifier(responsable.UserId,responsable.identifiant,responsable.nom,responsable.prenom,responsable.CIN)"
-                        class="btn btn-success mb-4"
-                        variant="gradient"
-                        color="success"
-                        id="btn2"
-                        >Modifier
-                      </vsud-button>
-                    </div>
-                    <p id="p" v-if="errors1.length">
-                        <b>Veuillez corriger les erreurs suivantes:</b>
-                        <ul>
-                        <li v-for="error in errors1 " :key="error">{{ error }}</li>
-                        </ul>
-                    </p>
-                  </form>
-      </div>
-    </ModalC>
               </td>
             </tr>
           </tbody>

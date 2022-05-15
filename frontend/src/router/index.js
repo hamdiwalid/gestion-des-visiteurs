@@ -13,6 +13,10 @@ import DemandesAgent from "../views/demandeAgent.vue";
 import HistoriqueAgent from "../views/historiqueAgent.vue";
 import HistoriqueSociete from "../views/historiqueSociete.vue";
 import SocieteS from "../views/Societe.vue";
+import modifieragent from "../views/components/modifieragent.vue";
+import modifierresponsable from "../views/components/modifierresponsable.vue";
+import modifiersociete from "../views/components/modifiersociete.vue";
+import modifierassistant from "../views/components/modifierassistant.vue";
 
 const routes = [
   {
@@ -89,6 +93,26 @@ const routes = [
     path: "/societe",
     name: "Sociéte",
     component: SocieteS,
+  },
+  {
+    path: "/modifieragent/:id?",
+    name: "Modifier agent",
+    component: modifieragent,
+  },
+  {
+    path: "/modifierresponsable/:id?",
+    name: "Modifier responsable",
+    component: modifierresponsable,
+  },
+  {
+    path: "/modifiersociete/:id?",
+    name: "Modifier sociéte",
+    component: modifiersociete,
+  },
+  {
+    path: "/modifierassistant/:id?",
+    name: "Modifier assistant",
+    component: modifierassistant,
   },
   
 ];

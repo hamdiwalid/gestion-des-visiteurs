@@ -8,10 +8,6 @@ C:\Users\USER\Desktop\projet\backend\backend\bin\Debug\net6.0\backend.pdb
 C:\Users\USER\Desktop\projet\backend\backend\bin\Debug\net6.0\Humanizer.dll
 C:\Users\USER\Desktop\projet\backend\backend\bin\Debug\net6.0\MessagePack.dll
 C:\Users\USER\Desktop\projet\backend\backend\bin\Debug\net6.0\MessagePack.Annotations.dll
-C:\Users\USER\Desktop\projet\backend\backend\bin\Debug\net6.0\System.Web.Cors.dll
-C:\Users\USER\Desktop\projet\backend\backend\bin\Debug\net6.0\System.Net.Http.Formatting.dll
-C:\Users\USER\Desktop\projet\backend\backend\bin\Debug\net6.0\System.Web.Http.dll
-C:\Users\USER\Desktop\projet\backend\backend\bin\Debug\net6.0\System.Web.Http.Cors.dll
 C:\Users\USER\Desktop\projet\backend\backend\bin\Debug\net6.0\Microsoft.AspNetCore.JsonPatch.dll
 C:\Users\USER\Desktop\projet\backend\backend\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Users\USER\Desktop\projet\backend\backend\bin\Debug\net6.0\Microsoft.AspNetCore.Razor.Language.dll

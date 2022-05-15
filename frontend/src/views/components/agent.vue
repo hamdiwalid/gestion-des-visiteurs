@@ -67,70 +67,13 @@
             >
               <i class="far fa-trash-alt me-2" aria-hidden="true"></i>Supprimer
             </a>
-            <a @click="toggleModal1" class="btn btn-link text-dark px-3 mb-0" href="javascript:;">
+            <router-link :to="`/modifieragent/${agent.UserId}`">
+            <a href="" class="btn btn-link text-dark px-3 mb-0">
               <i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i
               >Modifier
             </a>
-            
+            </router-link>
           </div>
-          <ModalC @close="toggleModal1" :modalActive="modalActive1">
-      <div class="modal-content">
-        <form role="form" @submit.prevent="ajouter" class="text-start">
-                    <label>Identifiant</label>
-                    <input
-                      id="identifiant"
-                      type="string"
-                      placeholder="Identifiant"
-                      class="form-control"
-                      name="identifiant"
-                      v-model="agent.identifiant"
-                    />
-                    <label>Nom</label>
-                    <input
-                      id="nom"
-                      type="string"
-                      placeholder="Nom"
-                      class="form-control"
-                      name="nom"
-                      v-model="agent.nom"
-                    />
-                    <label>Prénom</label>
-                    <input
-                      id="prenom"
-                      type="string"
-                      placeholder="Prénom"
-                      class="form-control"
-                      name="prenom"
-                      v-model="agent.prenom"
-                    />
-                    <label>CIN</label>
-                    <input
-                      id="cin"
-                      type="number"
-                      placeholder="CIN"
-                      class="form-control"
-                      name="cin"
-                      v-model="agent.CIN"
-                    />
-
-                    <div class="text-center">
-                      <vsud-button @click="modifier(agent.UserId,agent.identifiant,agent.nom,agent.prenom,agent.CIN)"
-                        class="btn btn-success mb-4"
-                        variant="gradient"
-                        color="success"
-                        id="btn2"
-                        >Modifier
-                      </vsud-button>
-                    </div>
-                    <p id="p" v-if="errors1.length">
-                        <b>Veuillez corriger les erreurs suivantes:</b>
-                        <ul>
-                        <li v-for="error in errors1 " :key="error">{{ error }}</li>
-                        </ul>
-                    </p>
-                  </form>
-      </div>
-    </ModalC>
               </td>
             </tr>
           </tbody>
@@ -221,7 +164,7 @@ import ModalC from "./ModalC.vue";
 import { ref } from "vue";
 import VsudButton from "@/components/VsudButton.vue";
 export default {
-  name: "demande",
+  name: "agent",
   data() {
     return {
       img1,

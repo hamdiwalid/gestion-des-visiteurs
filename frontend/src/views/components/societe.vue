@@ -60,60 +60,13 @@
             >
               <i class="far fa-trash-alt me-2" aria-hidden="true"></i>Supprimer
             </a>
-            <a @click="toggleModal1"
-            class="btn btn-link text-dark px-3 mb-0" href="javascript:;">
+            <router-link :to="`/modifiersociete/${societe.id}`">
+            <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;">
               <i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i
               >Modifier
             </a>
-            
+            </router-link>
           </div>
-          <ModalC @close="toggleModal1" :modalActive="modalActive1">
-      <div class="modal-content">
-        <form role="form" @submit.prevent="ajouter" class="text-start">
-                    <label>Nom</label>
-                    <input
-                      id="nom"
-                      type="string"
-                      placeholder="Nom"
-                      class="form-control"
-                      name="nom"
-                      v-model="societe.nom"
-                    />
-                    <label>Description</label>
-                    <textarea id="description"
-                      type="string"
-                      placeholder="Description"
-                      class="form-control"
-                      name="description"
-                      v-model="societe.description"
-                      />
-                      <label>Matricule fiscal</label>
-                    <input
-                      id="matricule"
-                      type="string"
-                      placeholder="Matricule fiscal"
-                      class="form-control"
-                      name="matricule"
-                      v-model="societe.matricule"
-                    />
-                    <div class="text-center">
-                      <vsud-button @click="modifier(societe.id,societe.nom,societe.description,societe.matricule)"
-                        class="btn btn-success mb-4"
-                        variant="gradient"
-                        color="success"
-                        id="btn2"
-                        >Modifier
-                      </vsud-button>
-                    </div>
-                    <p id="p" v-if="errors1.length">
-                        <b>Veuillez corriger les erreurs suivantes:</b>
-                        <ul>
-                        <li v-for="error in errors1 " :key="error">{{ error }}</li>
-                        </ul>
-                    </p>
-                  </form>
-      </div>
-    </ModalC>
               </td>
             </tr>
           </tbody>
@@ -172,12 +125,6 @@
 </template>
 
 <script>
-import img1 from "../../assets/img/team-2.jpg";
-import img2 from "../../assets/img/team-3.jpg";
-import img3 from "../../assets/img/team-4.jpg";
-import img4 from "../../assets/img/team-3.jpg";
-import img5 from "../../assets/img/team-2.jpg";
-import img6 from "../../assets/img/team-4.jpg";
 import axios from 'axios';
 import ModalC from "./ModalC.vue";
 import { ref } from "vue";
@@ -186,12 +133,6 @@ export default {
   name: "societe",
   data() {
     return {
-      img1,
-      img2,
-      img3,
-      img4,
-      img5,
-      img6,
       societes:null,
       nom:'',
       description:'',

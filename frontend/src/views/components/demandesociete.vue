@@ -207,7 +207,6 @@ export default {
       .then(reponse =>{
         this.societes = reponse.data;
       });
-      this.user = localStorage.getItem("currentUser");
       
   },
   computed: {
@@ -220,12 +219,11 @@ export default {
   methods:{
    ajouter: function (e) {
       if (this.motive) {
-     var id = this.user[this.user.length-2]
       axios.post('Demande',{
         description:this.description,
         motive:this.motive,
         userId:this.user.UserId,
-        societeId:id ,
+        societeId:this.user.SocieteId ,
         date:this.date,
         etat:'nonpresent',
       })
@@ -234,12 +232,12 @@ export default {
           etat: "nonlu",
           titre: "Nouvelle demande",
           userId: this.user.UserId,
-          societeid: id
+          societeid: this.user.SocieteId
         })
         .then(reponse=>{
           console.log(reponse)
         })
-        axios.get(`Demande/dsociete?id=${id}`)
+        axios.get(`Demande/dsociete?id=${this.user.SocieteId}`)
       .then(reponse=>{
          this.demandes = reponse.data;
         console.log(this.demandes);
